@@ -1,0 +1,11 @@
+{
+  "name": "skillbox_ts_graduate",
+  "version": "1.0.0",
+  "description": "Graduate work for Typescript course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "$NAME <$EMAIL>",
+  "license": "ISC"
+}
