@@ -1,0 +1,26 @@
+.content-wrap {
+  flex: 1;
+}
+
+.over-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.main {
+  padding: 35px 53px 145px 46px;
+  flex: 1;
+}
+
+@media (max-width: 1300px) {
+  .content-wrap {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    padding: 0px 16px 145px 16px;
+    background-color: var(--color-greybg);
+  }
+}
