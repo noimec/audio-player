@@ -14,8 +14,8 @@ interface ILink
 export const Link: FC<ILink> = ({ href, svg, className, children }) => {
   return (
     <a className={className} href={href}>
-      {svg && svg}
-      {children && children}
+      {svg}
+      {children}
     </a>
   );
 };
