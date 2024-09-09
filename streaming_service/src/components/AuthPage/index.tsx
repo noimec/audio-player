@@ -9,6 +9,8 @@ import type { LoginFormData, RegisterFormData, FormData } from "../../types";
 import { login, registerUser } from "../../api/auth";
 import { FormInput } from "../FormInput";
 import { loginFields, registerFields } from "../../data/FormData";
+import { Button } from "../UI/Button";
+import { LoginIcon, RegisterIcon } from "../../assets/svg";
 
 export const AuthPage: FC = () => {
   const [authState, setAuthState] = useState<"Login" | "Register">("Register");
@@ -23,7 +25,7 @@ export const AuthPage: FC = () => {
 
   const fields = authState === "Register" ? registerFields : loginFields;
 
-  const handleSwitchAuth = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSwitchAuth = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setAuthState((prevState) =>
       prevState === "Register" ? "Login" : "Register"
@@ -54,12 +56,15 @@ export const AuthPage: FC = () => {
       >
         <h1 className="m-0 mb-4 text-center">{authState}</h1>
         <div className="flex justify-center mb-6">
-          <button
+          <Button
             className={cn("bg-[#fc6d3e] text-white p-2 rounded-lg opacity-90")}
             onClick={handleSwitchAuth}
+            svg={authState === "Register" ?  <LoginIcon /> : <RegisterIcon />}
           >
-            Switch to {authState === "Register" ? "Login" : "Register"}
-          </button>
+            <span className="mr-1">
+              Switch to {authState === "Register" ? "Login" : "Register"}
+            </span>
+          </Button>
         </div>
 
         {fields.map(({ id, label, type, validation }) => (
@@ -74,9 +79,13 @@ export const AuthPage: FC = () => {
           />
         ))}
 
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg">
-          Submit
-        </button>
+        <Button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded-lg"
+          svg={authState === "Register" ? <RegisterIcon /> : <LoginIcon />}
+        >
+          <span className="mr-1">Submit</span>
+        </Button>
       </form>
     </main>
   );

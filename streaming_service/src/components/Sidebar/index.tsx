@@ -1,24 +1,24 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import cn from "classnames";
 
 import { Button } from "../UI/Button";
-import { PlaylistsSvg, SerachSvg, TracksSvg } from "../../assets/svg";
-import { SwitchScreenType } from "../../types";
+import {
+  AddPlaylistIcon,
+  PlaylistsSvg,
+  SerachSvg,
+  TracksSvg,
+} from "../../assets/svg";
+import { IPlaylist, SwitchScreenType } from "../../types";
+import { PlaylistModal } from "../PlaylistModal";
 
 interface SidebarProps {
+  playlists: IPlaylist[];
   onSwitchScreen: (screen: SwitchScreenType) => void;
 }
 
-const playlists = [
-  { name: "Любимые" },
-  { name: "Плейлист 1" },
-  { name: "Плейлист 2" },
-  { name: "Плейлист 3" },
-  { name: "Плейлист 4" },
-  { name: "Плейлист 5" },
-];
+export const Sidebar: FC<SidebarProps> = ({ playlists, onSwitchScreen }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
 
-export const Sidebar: FC<SidebarProps> = ({ onSwitchScreen }) => {
   return (
     <aside className="bg-[#f5f5f5] max-w-[289px] w-full overflow-auto xl:max-w-[100%] xl:px-11 xl:py-5 sm:px-4 sm:py-5">
       <h2 className="absolute w-[1px] h-[1px] p-0 border-none overflow-hidden">
@@ -54,6 +54,21 @@ export const Sidebar: FC<SidebarProps> = ({ onSwitchScreen }) => {
           >
             <span>Плейлисты</span>
           </Button>
+          <Button
+            variant="aside"
+            svg={<AddPlaylistIcon />}
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalOpen(true);
+            }}
+          >
+            <span className="mr-2">Добавить плейлист</span>
+          </Button>
+
+          <PlaylistModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+          />
         </div>
         <ul className="text-xl flex flex-col xl:flex-row">
           {playlists.map((playlist, index) => (

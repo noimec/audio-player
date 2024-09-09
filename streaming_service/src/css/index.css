@@ -75,6 +75,7 @@ html {
 }
 
 body {
+  position: relative;
   font-family: "Circular", sans-serif;
   margin: 0;
 }

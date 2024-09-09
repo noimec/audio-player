@@ -12,7 +12,7 @@ interface IButton
   image?: ReactNode;
   variant?: "aside" | "like" | "dropdown";
   active?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const Button: FC<IButton> = ({
@@ -38,9 +38,7 @@ export const Button: FC<IButton> = ({
           "transition group focus-visible:outline-none relative z-2",
         variant === "dropdown" &&
           "focus:outline-none focus:rounded-full focus:border-[#aaaaaa] group relative z-2 w-10 h-10 flex items-center justify-center rounded-full border border-transparent transition xl:hover:border-[#aaaaaa]",
-        variant === "dropdown" &&
-          active &&
-          "rotate-90",
+        variant === "dropdown" && active && "rotate-90",
         className
       )}
     >

@@ -82,3 +82,24 @@ export interface FormInputProps {
         };
     };
 }
+
+export interface TracksState {
+    tracks: ITrack[];
+    loading: boolean;
+    error: string | null;
+}
+
+export interface PlaylistsState {
+    playlists: IPlaylist[],
+    loading: boolean,
+    error: string | null,
+}
+
+export interface AuthState {
+    token: string | null;
+}
+
+
+export interface TracksScreenProps {
+    tracks: ITrack[];
+}

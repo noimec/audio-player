@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ITrack } from "../types";
+
+import type { ITrack } from "../types";
 
 export const getTracks = async (token: string): Promise<ITrack[] | undefined> => {
     try {

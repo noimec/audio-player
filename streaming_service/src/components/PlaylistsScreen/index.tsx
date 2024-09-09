@@ -1,172 +1,14 @@
 import { FC } from "react";
-import { IPlaylist } from "../../types";
 import cn from "classnames";
+
+import { IPlaylist } from "../../types";
 import { Link } from "../UI/Link";
 
-const playlists: IPlaylist[] = [
-  {
-    createdAt: "asf",
-    id: 1,
-    name: "safd",
-    songs: [
-      {
-        id: 1,
-        image: "asdasd",
-        name: "asfasf",
-        createdAt: "asd",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "asfasf" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-      {
-        id: 2,
-        image: "qqqqqq",
-        name: "qqq",
-        createdAt: "qqq",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "qqqqq" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-    ],
-    user: [],
-  },
-  {
-    createdAt: "asf",
-    id: 2,
-    name: "safd",
-    songs: [
-      {
-        id: 1,
-        image: "asdasd",
-        name: "asfasf",
-        createdAt: "asd",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "asfasf" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-      {
-        id: 2,
-        image: "qqqqqq",
-        name: "qqq",
-        createdAt: "qqq",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "qqqqq" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-    ],
-    user: [],
-  },
-  {
-    createdAt: "asf",
-    id: 3,
-    name: "safd",
-    songs: [
-      {
-        id: 1,
-        image: "asdasd",
-        name: "asfasf",
-        createdAt: "asd",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "asfasf" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-      {
-        id: 2,
-        image: "qqqqqq",
-        name: "qqq",
-        createdAt: "qqq",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "qqqqq" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-    ],
-    user: [],
-  },
-  {
-    createdAt: "asf",
-    id: 4,
-    name: "safd",
-    songs: [
-      {
-        id: 1,
-        image: "asdasd",
-        name: "asfasf",
-        createdAt: "asd",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "asfasf" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-      {
-        id: 2,
-        image: "qqqqqq",
-        name: "qqq",
-        createdAt: "qqq",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "qqqqq" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-    ],
-    user: [],
-  },
-  {
-    createdAt: "asf",
-    id: 5,
-    name: "safd",
-    songs: [
-      {
-        id: 1,
-        image: "asdasd",
-        name: "asfasf",
-        createdAt: "asd",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "asfasf" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-      {
-        id: 2,
-        image: "qqqqqq",
-        name: "qqq",
-        createdAt: "qqq",
-        artist: { createdAt: "asf", id: 1, image: "saf", name: "asfsaf" },
-        duration: 2132,
-        album: { createdAt: "asf", id: 1, image: "asd", name: "qqqqq" },
-        likes: [],
-        filename: "",
-        path: "",
-      },
-    ],
-    user: [],
-  },
-];
+interface PlaylistsScreenProps {
+  playlists: IPlaylist[];
+}
 
-export const PlaylistsScreen: FC = () => {
+export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
   return (
     <section>
       <h2 className="text-3xl mb-1">Плейлисты</h2>
@@ -181,7 +23,7 @@ export const PlaylistsScreen: FC = () => {
           >
             <img
               className="w-full mb-5 sm:mb-0 sm:mr-5 sm:h-full sm:w-[99px]"
-              src={songs[0].album.image}
+              src={songs[0] ? songs[0].album.image : '/images/default-cover.jpg'}
               alt={name}
             />
             <div className="sm:flex-1">
