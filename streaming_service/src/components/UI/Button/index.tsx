@@ -28,7 +28,7 @@ export const Button: FC<IButton> = ({
     <button
       onClick={onClick}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50",
         variant === "aside" &&
           "text-xl mb-3 transition focus:outline-none focus:bg-white xl:hover:bg-white xl:min-w-max xl:inline-flex xl:rounded-[30px] sm:text-sm",
         variant === "aside" &&

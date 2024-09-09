@@ -1,3 +1,5 @@
+import type { FieldError, UseFormRegister } from "react-hook-form";
+
 export type SwitchScreenType = "tracks" | "playlists"
 
 export interface ITrack {
@@ -40,4 +42,43 @@ export interface User {
     id: number
     lastName: string
     username: string
+}
+
+export type RegisterFormData = {
+    username: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+};
+
+export type LoginFormData = {
+    username: string;
+    password: string;
+};
+
+export type FormData = RegisterFormData | LoginFormData;
+
+export interface FormInputProps {
+    id: keyof FormData;
+    label: string;
+    type: string;
+    register: UseFormRegister<FormData>;
+    error?: FieldError;
+    validation:
+    | {
+        required: string;
+        minLength?: undefined;
+        pattern?: undefined;
+    }
+    | {
+        required: string;
+        minLength: {
+            value: number;
+            message: string;
+        };
+        pattern: {
+            value: RegExp;
+            message: string;
+        };
+    };
 }

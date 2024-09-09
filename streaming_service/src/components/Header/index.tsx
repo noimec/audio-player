@@ -34,9 +34,9 @@ export const Header: FC = () => {
       </div>
       <Button
         className={cn(
-          "outline-none transition focus-visible:outline-[#e8e8e8]",
+          "outline-none transition focus-visible:outline-[#e8e8e8] rounded-[30px] overflow-hidden",
           "opacity-100 bg-[#e8e8e8]", //active &&
-          "bg-[#f5f5f5] self-center p-[5px_13px] rounded-[30px] flex items-center max-w-[246px] w-[100%]",
+          "bg-[#f5f5f5] self-center p-[5px_13px] flex items-center max-w-[246px] w-[100%]",
           "xl:hover:opacity-60 lg:ml-auto sm:bg-transparent sm:text-xs sm:p-0 sm:max-w-[max-content]"
         )}
         svg={<RightArrowSvg className="sm:hidden" />}
