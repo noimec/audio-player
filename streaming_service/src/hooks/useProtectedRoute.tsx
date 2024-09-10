@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import { RootState } from "../store";
+import { getCookie } from "../utils";
 
 export const useProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = getCookie('__session');
 
   if (!token) {
     return <Navigate to="/auth" />;

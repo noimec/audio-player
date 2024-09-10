@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import type { LoginFormData, RegisterFormData } from "../types";
+import { setCookie } from "../utils";
 
 export const registerUser = async ({ firstName, lastName, password, username }: RegisterFormData): Promise<string | undefined> => {
     try {
@@ -10,8 +11,9 @@ export const registerUser = async ({ firstName, lastName, password, username }: 
             firstName,
             lastName
         });
-
         const { access_token } = registerResponse.data;
+
+        setCookie('__session', access_token, 7);
 
         return access_token;
     } catch (error) {
@@ -30,6 +32,8 @@ export const login = async ({ password, username }: LoginFormData): Promise<stri
             password
         });
         const { access_token } = response.data;
+
+        setCookie('__session', access_token, 7);
 
         return access_token;
     } catch (error) {

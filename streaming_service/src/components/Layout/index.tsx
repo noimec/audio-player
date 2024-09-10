@@ -1,14 +1,11 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 import { Header } from "../Header";
-
-interface LayoutProps {
-  children: ReactNode;
-}
+import { LayoutProps } from "../../types";
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div id="over-layout" className="relative overflow-hidden">
+    <div className="relative overflow-hidden">
       <Header />
       <main>{children}</main>
       {/* <Footer /> */}

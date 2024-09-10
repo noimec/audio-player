@@ -1,10 +1,8 @@
 import cn from "classnames";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { setToken } from "../../store/authSlice";
 import type { LoginFormData, RegisterFormData, FormData } from "../../types";
 import { login, registerUser } from "../../api/auth";
 import { FormInput } from "../FormInput";
@@ -14,7 +12,6 @@ import { LoginIcon, RegisterIcon } from "../../assets/svg";
 
 export const AuthPage: FC = () => {
   const [authState, setAuthState] = useState<"Login" | "Register">("Register");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -36,13 +33,11 @@ export const AuthPage: FC = () => {
     if (authState === "Register") {
       const token = await registerUser(data as RegisterFormData);
       if (token) {
-        dispatch(setToken(token));
         navigate("/");
       }
     } else {
       const token = await login(data as LoginFormData);
       if (token) {
-        dispatch(setToken(token));
         navigate("/");
       }
     }

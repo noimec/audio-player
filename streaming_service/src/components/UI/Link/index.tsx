@@ -1,15 +1,6 @@
-import { FC, ReactElement, ReactNode } from "react";
+import { FC } from "react";
 
-interface ILink
-  extends React.DetailedHTMLProps<
-    React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    HTMLAnchorElement
-  > {
-  href: string;
-  svg?: ReactNode;
-  className?: string;
-  children?: ReactElement;
-}
+import { ILink } from "../../../types";
 
 export const Link: FC<ILink> = ({ href, svg, className, children }) => {
   return (

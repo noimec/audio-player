@@ -1,23 +1,40 @@
-import { FC } from "react";
+import { FC, useRef, useState } from "react";
+import cn from "classnames";
+
 import { Button } from "../UI/Button";
 import { DropdownSvg, LikeSvg } from "../../assets/svg";
 import { Link } from "../UI/Link";
-import cn from "classnames";
 import { ITrack } from "../../types";
+import { TrackDropdown } from "../TrackDropdown";
 
 export const Track: FC<ITrack> = ({
-    id,
-    name,
-    artist,
-    image,
-    album,
-    duration,
-    createdAt,
-  }) => {
+  id,
+  name,
+  artist,
+  image,
+  album,
+  duration,
+  createdAt,
+}) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  const handleDropdownOpen = () => {
+    if (buttonRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: buttonRect.bottom,
+        left: buttonRect.left,
+      });
+    }
+    setSelectedTrackId(id);
+    setIsDropdownOpen(true);
+  };
+
   return (
-    <li
-      className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5"
-    >
+    <li className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5">
       <div className="w-full max-w-10 sm:hidden">{id}</div>
       <div className="max-w-[434px] pr-3 w-full items-center flex lg:max-w-none lg:flex-8">
         <img
@@ -53,8 +70,23 @@ export const Track: FC<ITrack> = ({
       <time className="w-full max-w-[157px] xxl:max-w-[56px] lg:hidden">
         {duration}
       </time>
-      <div className="w-full max-w-11 relative">
-        <Button variant="dropdown" svg={<DropdownSvg />} />
+      <div className="w-full max-w-11 relative" ref={buttonRef}>
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDropdownOpen();
+          }}
+          variant="dropdown"
+          svg={<DropdownSvg />}
+        />
+        {isDropdownOpen && (
+          <TrackDropdown
+            trackId={selectedTrackId}
+            isOpen={isDropdownOpen}
+            onClose={() => setIsDropdownOpen(false)}
+            position={dropdownPosition}
+          />
+        )}
       </div>
     </li>
   );

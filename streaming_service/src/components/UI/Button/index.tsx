@@ -1,19 +1,7 @@
 import cn from "classnames";
-import { FC, ReactElement, ReactNode } from "react";
+import { FC } from "react";
 
-interface IButton
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
-  children?: ReactElement;
-  className?: string;
-  svg?: ReactNode;
-  image?: ReactNode;
-  variant?: "aside" | "like" | "dropdown";
-  active?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-}
+import { IButton } from "../../../types";
 
 export const Button: FC<IButton> = ({
   children,

@@ -1,4 +1,5 @@
 import { RefObject, useEffect } from "react";
+
 import { useLatest } from "./useLatest";
 
 export const useOutsideClick = (

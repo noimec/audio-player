@@ -1,3 +1,4 @@
+import { ReactElement, ReactNode } from "react";
 import type { FieldError, UseFormRegister } from "react-hook-form";
 
 export type SwitchScreenType = "tracks" | "playlists"
@@ -102,4 +103,69 @@ export interface AuthState {
 
 export interface TracksScreenProps {
     tracks: ITrack[];
+}
+
+export interface PlaylistModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+export interface PlaylistRemoveModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    playlistId: number | null;
+    name: string;
+}
+
+export interface AddToPlaylistModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    trackId: number | null;
+}
+
+export interface LayoutProps {
+    children: ReactNode;
+}
+
+export interface PlaylistsScreenProps {
+    playlists: IPlaylist[];
+}
+
+export interface SidebarProps {
+    playlists: IPlaylist[];
+    onSwitchScreen: (screen: SwitchScreenType) => void;
+    onPlaylistSelect: (playlist: IPlaylist) => void;
+    onSelectAllTracks: () => void;
+}
+
+export interface TrackDropdownProps {
+    isOpen: boolean;
+    onClose: () => void;
+    position: { top: number; left: number };
+    trackId: number | null;
+}
+
+export interface IButton
+    extends React.DetailedHTMLProps<
+        React.ButtonHTMLAttributes<HTMLButtonElement>,
+        HTMLButtonElement
+    > {
+    children?: ReactElement;
+    className?: string;
+    svg?: ReactNode;
+    image?: ReactNode;
+    variant?: "aside" | "like" | "dropdown";
+    active?: boolean;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+export interface ILink
+    extends React.DetailedHTMLProps<
+        React.AnchorHTMLAttributes<HTMLAnchorElement>,
+        HTMLAnchorElement
+    > {
+    href: string;
+    svg?: ReactNode;
+    className?: string;
+    children?: ReactElement;
 }

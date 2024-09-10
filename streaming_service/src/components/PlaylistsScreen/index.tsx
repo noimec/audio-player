@@ -1,12 +1,8 @@
 import { FC } from "react";
 import cn from "classnames";
 
-import { IPlaylist } from "../../types";
 import { Link } from "../UI/Link";
-
-interface PlaylistsScreenProps {
-  playlists: IPlaylist[];
-}
+import { PlaylistsScreenProps } from "../../types";
 
 export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
   return (
@@ -23,7 +19,7 @@ export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
           >
             <img
               className="w-full mb-5 sm:mb-0 sm:mr-5 sm:h-full sm:w-[99px]"
-              src={songs[0] ? songs[0].album.image : '/images/default-cover.jpg'}
+              src={songs && songs[0] ? songs[0].image : '/images/default-cover.jpg'}
               alt={name}
             />
             <div className="sm:flex-1">
@@ -39,7 +35,7 @@ export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
                 </Link>
               </h3>
               <span className="text-[#a4a4a4] font-bold sm:text-xs">
-                {songs.length} треков
+                {songs && songs.length ? songs.length : 0} треков
               </span>
             </div>
           </li>

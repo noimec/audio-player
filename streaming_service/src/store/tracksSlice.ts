@@ -4,20 +4,17 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { ITrack, TracksState } from "../types";
 import { RootState } from "../store";
+import { getAuthHeaders } from "../utils";
 
 export const fetchTracks = createAsyncThunk(
   "tracks/fetchTracks",
-  async (token: string, thunkAPI) => {
+  async () => {
     try {
-      const response = await axios.get<ITrack[]>('http://localhost:3000/api/songs', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get<ITrack[]>('http://localhost:3000/api/songs', getAuthHeaders());
       return response.data;
     } catch (error) {
       console.error("Error fetching tracks:", error);
-      return thunkAPI.rejectWithValue("Failed to load tracks");
+      return undefined
     }
   }
 );
@@ -38,9 +35,11 @@ const tracksSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchTracks.fulfilled, (state, action: PayloadAction<ITrack[]>) => {
+      .addCase(fetchTracks.fulfilled, (state, action: PayloadAction<ITrack[] | undefined>) => {
         state.loading = false;
-        state.tracks = action.payload;
+        if (action.payload) {
+          state.tracks = action.payload;
+        }
       })
       .addCase(fetchTracks.rejected, (state, action) => {
         state.loading = false;
