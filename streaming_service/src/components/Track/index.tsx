@@ -10,6 +10,7 @@ import { formatDuration, timeAgo } from "../../utils";
 import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
 import { setLikeTrack, setUnlikeTrack } from "../../store/tracksSlice";
+import { setSelectedTrack } from "../../store/playerTrackSlice";
 
 export const Track: FC<ITrack> = ({
   id,
@@ -22,6 +23,8 @@ export const Track: FC<ITrack> = ({
   selectedPlaylist,
   index,
   likes,
+  filename,
+  path,
   setSelectedPlaylist,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -33,6 +36,23 @@ export const Track: FC<ITrack> = ({
 
   const formattedDuration = useMemo(() => formatDuration(duration), [duration]);
   const formattedTimeAgo = useMemo(() => timeAgo(createdAt), [createdAt]);
+
+  const handleSelectTrack = () => {
+    dispatch(
+      setSelectedTrack({
+        id,
+        name,
+        artist,
+        image,
+        album,
+        duration,
+        createdAt,
+        likes,
+        filename,
+        path,
+      })
+    );
+  };
 
   const handleDropdownOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -64,7 +84,10 @@ export const Track: FC<ITrack> = ({
   };
 
   return (
-    <li className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5">
+    <li
+      onClick={handleSelectTrack}
+      className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5"
+    >
       <div className="w-full max-w-10 sm:hidden">{index}</div>
       <div className="max-w-[434px] pr-3 w-full items-center flex lg:max-w-none lg:flex-8">
         <img

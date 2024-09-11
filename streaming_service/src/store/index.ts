@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import tracksReducer from "./tracksSlice";
 import playlistsReducer from "./playlistsSlice";
+import playerTrackReducer from "./playerTrackSlice";
 
 export const store = configureStore({
   reducer: {
     tracks: tracksReducer,
     playlists: playlistsReducer,
+    playerTrack: playerTrackReducer,
   },
 });
 

@@ -28,7 +28,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
   if (!isOpen) return null;
 
   const handleRemoveTrackInPlaylists = async () => {
-    if (!selectedPlaylist || trackId === null) {
+    if (!selectedPlaylist || !setSelectedPlaylist || trackId === null) {
       console.error("No playlist selected or track ID is invalid");
       return;
     }
