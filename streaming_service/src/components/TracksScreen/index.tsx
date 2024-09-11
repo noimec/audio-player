@@ -4,7 +4,11 @@ import { DataSvg, TimeSvg } from "../../assets/svg";
 import { Track } from "../Track";
 import { TracksScreenProps } from "../../types";
 
-export const TracksScreen: FC<TracksScreenProps> = ({ tracks }) => {
+export const TracksScreen: FC<TracksScreenProps> = ({
+  tracks,
+  selectedPlaylist,
+  setSelectedPlaylist
+}) => {
   return (
     <section>
       <h2 className="text-3xl mb-1">Треки</h2>
@@ -20,8 +24,14 @@ export const TracksScreen: FC<TracksScreenProps> = ({ tracks }) => {
         </div>
       </div>
       <ul>
-        {tracks.map((track) => (
-          <Track {...track} key={track.id} />
+        {tracks && tracks.map((track, index) => (
+          <Track
+            key={track.id}
+            {...track}
+            index={index + 1}
+            setSelectedPlaylist={setSelectedPlaylist}
+            selectedPlaylist={selectedPlaylist}
+          />
         ))}
       </ul>
     </section>

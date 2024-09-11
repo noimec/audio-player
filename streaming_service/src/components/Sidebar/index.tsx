@@ -35,16 +35,17 @@ export const Sidebar: FC<SidebarProps> = ({
           className="none lg:flex lg:bg-white lg:min-w-11 lg:w-full lg:rounded-full lg:justify-center lg:items-center lg:mr-5"
           svg={<SerachSvg />}
         />
-        <div className="flex flex-col mb-5">
+        <div className="flex flex-col mb-5 items-start">
           <Button
             onClick={() => {
               onSwitchScreen("tracks");
               onSelectAllTracks();
             }}
             variant="aside"
+            className="flex-row-reverse w-full"
             svg={
               <TracksSvg
-                className="sm:w-4 ml-3"
+                className="sm:w-4 mr-3"
                 path={cn("xl:stroke-wthite")}
               />
             }
@@ -54,18 +55,17 @@ export const Sidebar: FC<SidebarProps> = ({
           <Button
             onClick={() => onSwitchScreen("playlists")}
             variant="aside"
+            className="flex-row-reverse w-full"
             svg={
-              <PlaylistsSvg
-                className="sm:w-4 ml-3"
-                path={cn("xl:stroke-wthite")}
-              />
+              <PlaylistsSvg className="sm:w-4 mr-3" path={cn("xl:stroke-wthite")} />
             }
           >
             <span>Плейлисты</span>
           </Button>
           <Button
+            className="flex-row-reverse w-full"
             variant="aside"
-            svg={<AddPlaylistIcon />}
+            svg={<AddPlaylistIcon className="mr-3" />}
             onClick={(e) => {
               e.stopPropagation();
               setModalOpen(true);

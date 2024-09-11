@@ -19,6 +19,33 @@ export const fetchTracks = createAsyncThunk(
   }
 );
 
+export const setLikeTrack = createAsyncThunk(
+  "tracks/setLikeTrack",
+  async ({ trackId }: { trackId: number }) => {
+    try {
+      const response = await axios.post<ITrack>(`http://localhost:3000/api/songs/${trackId}/like`, {}, getAuthHeaders());
+      return response.data;
+    } catch (error) {
+      console.error("Error like track:", error);
+      return undefined
+    }
+  }
+);
+
+export const setUnlikeTrack = createAsyncThunk(
+  "tracks/setUnlikeTrack",
+  async ({ trackId }: { trackId: number }) => {
+    try {
+      const response = await axios.post<ITrack>(`http://localhost:3000/api/songs/${trackId}/unlike`, {}, getAuthHeaders());
+      return response.data;
+    } catch (error) {
+      console.error("Error unlike track:", error);
+      return undefined
+    }
+  }
+);
+
+
 const initialState: TracksState = {
   tracks: [],
   loading: false,
@@ -42,6 +69,40 @@ const tracksSlice = createSlice({
         }
       })
       .addCase(fetchTracks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(setLikeTrack.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(setLikeTrack.fulfilled, (state, action: PayloadAction<ITrack | undefined>) => {
+        state.loading = false;
+        if (action.payload) {
+          const index = state.tracks.findIndex(track => track.id === action.payload?.id);
+          if (index !== -1) {
+            state.tracks[index].likes = action.payload.likes;
+          }
+        }
+      })
+      .addCase(setLikeTrack.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(setUnlikeTrack.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(setUnlikeTrack.fulfilled, (state, action: PayloadAction<ITrack | undefined>) => {
+        state.loading = false;
+        if (action.payload) {
+          const index = state.tracks.findIndex(track => track.id === action.payload?.id);
+          if (index !== -1) {
+            state.tracks[index].likes = action.payload.likes;
+          }
+        }
+      })
+      .addCase(setUnlikeTrack.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

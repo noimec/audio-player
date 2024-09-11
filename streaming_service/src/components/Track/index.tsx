@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useMemo, useRef, useState } from "react";
 import cn from "classnames";
 
 import { Button } from "../UI/Button";
@@ -6,6 +6,10 @@ import { DropdownSvg, LikeSvg } from "../../assets/svg";
 import { Link } from "../UI/Link";
 import { ITrack } from "../../types";
 import { TrackDropdown } from "../TrackDropdown";
+import { formatDuration, timeAgo } from "../../utils";
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
+import { setLikeTrack, setUnlikeTrack } from "../../store/tracksSlice";
 
 export const Track: FC<ITrack> = ({
   id,
@@ -15,13 +19,23 @@ export const Track: FC<ITrack> = ({
   album,
   duration,
   createdAt,
+  selectedPlaylist,
+  index,
+  likes,
+  setSelectedPlaylist,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [localLikes, setLocalLikes] = useState(likes.length);
   const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLDivElement>(null);
+  const dispatch: AppDispatch = useDispatch();
 
-  const handleDropdownOpen = () => {
+  const formattedDuration = useMemo(() => formatDuration(duration), [duration]);
+  const formattedTimeAgo = useMemo(() => timeAgo(createdAt), [createdAt]);
+
+  const handleDropdownOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
@@ -33,9 +47,25 @@ export const Track: FC<ITrack> = ({
     setIsDropdownOpen(true);
   };
 
+  const onToggleLikeTrack = async () => {
+    const previousLikes = localLikes;
+    try {
+      if (!localLikes) {
+        setLocalLikes(1);
+        await dispatch(setLikeTrack({ trackId: id })).unwrap();
+      } else {
+        setLocalLikes(0);
+        await dispatch(setUnlikeTrack({ trackId: id })).unwrap();
+      }
+    } catch (error) {
+      console.error("Failed to toggle like/unlike track", error);
+      setLocalLikes(previousLikes);
+    }
+  };
+
   return (
     <li className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5">
-      <div className="w-full max-w-10 sm:hidden">{id}</div>
+      <div className="w-full max-w-10 sm:hidden">{index}</div>
       <div className="max-w-[434px] pr-3 w-full items-center flex lg:max-w-none lg:flex-8">
         <img
           className="w-16 h-16 object-cover object-center mr-3"
@@ -64,23 +94,26 @@ export const Track: FC<ITrack> = ({
         {album.name}
       </div>
       <div className="flex w-full max-w-[488px] pr-3 mr-auto text-[#a4a4a4] font-bold xxl:max-w-[230px] lg:flex-4 lg:max-w-none">
-        <span className="mr-auto lg:hidden">{createdAt}</span>
-        <Button variant="like" svg={<LikeSvg active={false} />} />
+        <span className="mr-auto lg:hidden">{formattedTimeAgo}</span>
+        <Button
+          variant="like"
+          onClick={onToggleLikeTrack}
+          svg={<LikeSvg active={!localLikes ? false : true} />}
+        />
       </div>
       <time className="w-full max-w-[157px] xxl:max-w-[56px] lg:hidden">
-        {duration}
+        {formattedDuration}
       </time>
       <div className="w-full max-w-11 relative" ref={buttonRef}>
         <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDropdownOpen();
-          }}
+          onClick={handleDropdownOpen}
           variant="dropdown"
           svg={<DropdownSvg />}
         />
         {isDropdownOpen && (
           <TrackDropdown
+            setSelectedPlaylist={setSelectedPlaylist}
+            selectedPlaylist={selectedPlaylist}
             trackId={selectedTrackId}
             isOpen={isDropdownOpen}
             onClose={() => setIsDropdownOpen(false)}

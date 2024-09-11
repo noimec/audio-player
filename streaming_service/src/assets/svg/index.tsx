@@ -287,8 +287,9 @@ export const RegisterIcon = () => (
   </svg>
 );
 
-export const AddPlaylistIcon = () => (
+export const AddPlaylistIcon = ({ className }: { className: string }) => (
   <svg
+    className={className}
     width="30px"
     height="30px"
     viewBox="0 0 512 512"
@@ -305,7 +306,11 @@ export const AddPlaylistIcon = () => (
   </svg>
 );
 
-export const RemoveIcon = ({ onClick }: { onClick: MouseEventHandler<SVGSVGElement>}) => (
+export const RemoveIcon = ({
+  onClick,
+}: {
+  onClick: MouseEventHandler<SVGSVGElement>;
+}) => (
   <svg
     onClick={onClick}
     width="25px"

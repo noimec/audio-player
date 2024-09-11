@@ -19,7 +19,7 @@ export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
           >
             <img
               className="w-full mb-5 sm:mb-0 sm:mr-5 sm:h-full sm:w-[99px]"
-              src={songs && songs[0] ? songs[0].image : '/images/default-cover.jpg'}
+              src={songs && songs[0] ? songs[songs.length - 1].image : '/images/default-cover.jpg'}
               alt={name}
             />
             <div className="sm:flex-1">
