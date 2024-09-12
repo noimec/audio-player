@@ -152,7 +152,8 @@ export interface IButton
     className?: string;
     svg?: ReactNode;
     image?: ReactNode;
-    variant?: "aside" | "like" | "dropdown";
+    text?: string;
+    variant?: "aside" | "like" | "dropdown" | 'close' | 'submit' | 'menu';
     active?: boolean;
     onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

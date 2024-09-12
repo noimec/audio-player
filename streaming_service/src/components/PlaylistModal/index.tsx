@@ -6,6 +6,7 @@ import { AppDispatch } from "../../store";
 import { addPlaylist } from "../../store/playlistsSlice";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { PlaylistModalProps } from "../../types";
+import { Button } from "../UI/Button";
 
 export const PlaylistModal: FC<PlaylistModalProps> = ({ isOpen, onClose }) => {
   const modalRoot = document.getElementById("modal-root");
@@ -35,33 +36,22 @@ export const PlaylistModal: FC<PlaylistModalProps> = ({ isOpen, onClose }) => {
       <div className="fixed top-0 left-0 bottom-0 right-0 z-40 bg-black/60"></div>
       <div
         ref={modalRef}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-[50px] z-50 bg-white rounded-[30px]"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 z-50 bg-white rounded-[30px] sm:px-4"
       >
         <div>
           <h2 className="mb-4 text-2xl">Добавить плейлист</h2>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="mb-4 border rounded-lg px-2 py-2 my-1 border-[#AAAAAA] min-w-[320px]"
+              className="mb-4 border rounded-lg px-2 py-2 my-1 border-[#AAAAAA] min-w-[320px] sm:min-w-[270px]"
               value={playlistName}
               onChange={(e) => setPlaylistName(e.target.value)}
               placeholder="Введите название плейлиста"
               required
             />
             <div className="flex justify-between">
-              <button
-                className="bg-blue-500 text-white p-2 rounded-lg"
-                type="submit"
-              >
-                Добавить
-              </button>
-              <button
-                className="bg-[#fc6d3e] text-white p-2 rounded-lg opacity-90"
-                type="button"
-                onClick={() => onClose()}
-              >
-                Отмена
-              </button>
+              <Button variant="submit" type="submit" text="Добавить" />
+              <Button variant="close" onClick={() => onClose()} text="Отмена" />
             </div>
           </form>
         </div>

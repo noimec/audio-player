@@ -6,6 +6,7 @@ import { AppDispatch } from "../../store";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { removePlaylist } from "../../store/playlistsSlice";
 import { PlaylistRemoveModalProps } from "../../types";
+import { Button } from "../UI/Button";
 
 export const PlaylistRemoveModal: FC<PlaylistRemoveModalProps> = ({
   isOpen,
@@ -40,26 +41,20 @@ export const PlaylistRemoveModal: FC<PlaylistRemoveModalProps> = ({
       <div className="fixed top-0 left-0 bottom-0 right-0 z-40 bg-black/20"></div>
       <div
         ref={modalRef}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-[50px] z-50 bg-white rounded-[30px]"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 z-50 bg-white rounded-[30px] sm:p-"
       >
         <div>
-          <h2 className="mb-4 text-2xl">Удалить {name}?</h2>
+          <h2 className="mb-4 text-2xl sm:text-xl">Удалить {name}?</h2>
           <form onSubmit={handleSubmit}>
             <div className="flex justify-between">
-              <button
-                className="bg-[#fc6d3e] text-white p-2 rounded-lg mr-2"
-                type="submit"
+              <Button
                 onClick={(e) => e.stopPropagation()}
-              >
-                Удалить
-              </button>
-              <button
-                className="bg-blue-500 text-white p-2 rounded-lg opacity-90"
-                type="button"
-                onClick={() => onClose()}
-              >
-                Отмена
-              </button>
+                type="submit"
+                variant="submit"
+                text="Удалить"
+                className="sm:mr-2"
+              />
+              <Button onClick={() => onClose()} variant="close" text="Отмена" />
             </div>
           </form>
         </div>

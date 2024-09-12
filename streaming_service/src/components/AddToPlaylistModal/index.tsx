@@ -9,6 +9,7 @@ import {
 } from "../../store/playlistsSlice";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { AddToPlaylistModalProps } from "../../types";
+import { Button } from "../UI/Button";
 
 export const AddToPlaylistModal: FC<AddToPlaylistModalProps> = ({
   isOpen,
@@ -66,18 +67,16 @@ export const AddToPlaylistModal: FC<AddToPlaylistModalProps> = ({
                 <div className="flex flex-col">
                   <div className="text-sm">{playlist.name}</div>
                   <span className="text-xs text-[#AAAAAA]">
-                    {playlist.songs && playlist.songs[0] ? playlist.songs.length : 0} треков
+                    {playlist.songs && playlist.songs[0]
+                      ? playlist.songs.length
+                      : 0}{" "}
+                    треков
                   </span>
                 </div>
               </li>
             ))}
           </ul>
-          <button
-            className="bg-[#fc6d3e] text-white p-2 rounded-lg opacity-90 self-end"
-            onClick={() => onClose()}
-          >
-            Отмена
-          </button>
+          <Button onClick={() => onClose()} variant="close" text="Отмена" />
         </div>
       </div>
     </>,

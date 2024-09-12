@@ -12,7 +12,7 @@ export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
         {playlists.map(({ name, id, songs }) => (
           <li
             className={cn(
-              "w-[calc((100%-90px)/4)] mb-7 not-nth-4n-mr30 relative xxl:not-nth-3n-mr0 lg:w-[calc((100%-60px)/3)] lg:not-nth-4n-mr0 lg:not-nth-3n-mr30",
+              "w-[calc((100%-90px)/4)] hover:opacity-90 transition mb-7 not-nth-4n-mr30 relative xxl:not-nth-3n-mr0 lg:w-[calc((100%-60px)/3)] lg:not-nth-4n-mr0 lg:not-nth-3n-mr30",
               "md:w-[calc((100%-30px)/2)] md:not-nth-3n-mr0 md:not-nth-2n-mr30 sm:w-full sm:flex sm:items-center sm:mb-5 sm:bg-white sm:not-nth-2n-mr0"
             )}
             key={id}

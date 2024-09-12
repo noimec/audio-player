@@ -7,11 +7,11 @@ import { Button } from "../UI/Button";
 
 export const Header: FC = () => {
   return (
-    <header className="flex pr-12 sm:p-4">
+    <header className="flex pr-12 md:pr-1 sm:p-4 sm:flex-col">
       <Link
         className={cn(
-          "focus-visible:outline-none max-w-[289px] w-[100%] p-4 flex justify-center",
-          "items-center xl:pl-11 xl:pr-11 xl:justify-start sm:p-0 sm:mr-auto"
+          "focus-visible:outline-none max-w-[289px] w-[100%] xl:p-4 flex justify-center group",
+          "items-center xl:px-11 lg:px-2 md:w-[150px] md:!p-1 xl:justify-start sm:p-0 sm:mr-auto"
         )}
         href="/"
         svg={<LogoSvg />}
@@ -19,7 +19,7 @@ export const Header: FC = () => {
       <div
         className={cn(
           "pl-12 pt-4 pb-4 flex-1 mr-8 sm:left-0 sm:pl-0 sm:pr-0",
-          "lg:absolute lg:w-[100%] lg:pl-12 lg:pr-12 lg:pt-0 lg:pb-0 lg:top-0 lg:translate-x-[-102%] lg:transition"
+          "lg:pl-0 lg:w-full md:mr-0 lg:transition"
         )}
       >
         <input

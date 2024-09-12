@@ -1,4 +1,3 @@
-import cn from "classnames";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -52,14 +51,13 @@ export const AuthPage: FC = () => {
         <h1 className="m-0 mb-4 text-center">{authState}</h1>
         <div className="flex justify-center mb-6">
           <Button
-            className={cn("bg-[#fc6d3e] text-white p-2 rounded-lg opacity-90")}
+            variant="close"
             onClick={handleSwitchAuth}
-            svg={authState === "Register" ?  <LoginIcon /> : <RegisterIcon />}
-          >
-            <span className="mr-1">
-              Switch to {authState === "Register" ? "Login" : "Register"}
-            </span>
-          </Button>
+            svg={authState === "Register" ? <LoginIcon /> : <RegisterIcon />}
+            text={`Switch to ${
+              authState === "Register" ? "Login" : "Register"
+            }`}
+          />
         </div>
 
         {fields.map(({ id, label, type, validation }) => (
@@ -76,11 +74,10 @@ export const AuthPage: FC = () => {
 
         <Button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded-lg"
+          variant="submit"
           svg={authState === "Register" ? <RegisterIcon /> : <LoginIcon />}
-        >
-          <span className="mr-1">Submit</span>
-        </Button>
+          text="Submit"
+        />
       </form>
     </main>
   );

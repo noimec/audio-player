@@ -8,7 +8,10 @@ import { TrackDropdownProps } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { removeTrackInPlaylist } from "../../store/playlistsSlice";
-import { selectSelectedPlaylist, setSelectedPlaylist } from "../../store/selectedPlaylistSlice";
+import {
+  selectSelectedPlaylist,
+  setSelectedPlaylist,
+} from "../../store/selectedPlaylistSlice";
 
 export const TrackDropdown: FC<TrackDropdownProps> = ({
   isOpen,
@@ -39,7 +42,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
           trackId: trackId,
         })
       ).unwrap();
-      dispatch(setSelectedPlaylist(updatedPlaylists))
+      dispatch(setSelectedPlaylist(updatedPlaylists));
       onClose();
     } catch (error) {
       console.error("Failed remove track in playlist", error);
@@ -48,7 +51,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
 
   return createPortal(
     <div
-      className="flex fixed flex-col z-30 -translate-x-[80px] translate-y-1 bg-white rounded-md p-3 border"
+      className="flex fixed flex-col z-30 -translate-x-[95px] translate-y-1 bg-white rounded-md p-3 border sm:-translate-x-[135px]"
       style={{
         top: `${position.top}px`,
         left: `${position.left}px`,
@@ -56,18 +59,19 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
       ref={dropdownRef}
     >
       <Button
-        className="mb-1"
+        variant="menu"
+        text="Добавить в плейлист"
         onClick={(e) => {
           e.stopPropagation();
           setIsAddToPlaylistModalOpen(true);
         }}
-      >
-        <span>Добавить в плейлист</span>
-      </Button>
+      />
       {selectedPlaylist && (
-        <Button onClick={handleRemoveTrackInPlaylists}>
-          <span>Удалить из плейлиста</span>
-        </Button>
+        <Button
+          variant="menu"
+          text="Удалить из плейлиста"
+          onClick={handleRemoveTrackInPlaylists}
+        />
       )}
       <AddToPlaylistModal
         trackId={trackId}

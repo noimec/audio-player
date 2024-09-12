@@ -86,7 +86,7 @@ export const Track: FC<ITrack> = ({
       onClick={handleSelectTrack}
       className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5"
     >
-      <div className="w-full max-w-10 sm:hidden">{index}</div>
+      <div className="w-full max-w-10 md:max-w-4 sm:hidden">{index}</div>
       <div className="max-w-[434px] pr-3 w-full items-center flex lg:max-w-none lg:flex-8">
         <img
           className="w-16 h-16 object-cover object-center mr-3"
@@ -99,7 +99,7 @@ export const Track: FC<ITrack> = ({
               className={cn(
                 'transition before:transition focus:text-[#fc6d3e] focus:before:border-[#fc6d3e] focus-visible:outline-none before:content-[""] before:absolute',
                 "before:top-0 before:left-0 before:right-0 before:bottom-0 before:border-t-[1px] before:border-b-[1px] before:border-t-[#e8e8e8] before:border-b-[#e8e8e8]",
-                "xl:text-[#fc6d3e] hover:before:border-[#fc6d3e] sm:text-lg sm:before:border-none"
+                " hover:before:border-[#fc6d3e] sm:text-lg sm:before:border-none"
               )}
               href="#"
             >
@@ -111,10 +111,10 @@ export const Track: FC<ITrack> = ({
           </span>
         </div>
       </div>
-      <div className="max-w-[363px] w-full pr-5 whitespace-nowrap overflow-hidden text-ellipsis xxl:max-w-[262px] lg:flex-4 lg:max-w-none">
+      <div className="max-w-[363px] w-full pr-5 whitespace-nowrap overflow-hidden text-ellipsis xxl:max-w-[262px] lg:flex-4 lg:max-w-none sm:hidden">
         {album.name}
       </div>
-      <div className="flex w-full max-w-[488px] pr-3 mr-auto text-[#a4a4a4] font-bold xxl:max-w-[230px] lg:flex-4 lg:max-w-none">
+      <div className="flex w-full max-w-[488px] md:w-[50px] pr-3 mr-auto text-[#a4a4a4] font-bold xxl:max-w-[230px] lg:flex-4 lg:max-w-none">
         <span className="mr-auto lg:hidden">{formattedTimeAgo}</span>
         <Button
           variant="like"
@@ -129,6 +129,7 @@ export const Track: FC<ITrack> = ({
         <Button
           onClick={handleDropdownOpen}
           variant="dropdown"
+          className="group"
           svg={<DropdownSvg />}
         />
         {isDropdownOpen && (

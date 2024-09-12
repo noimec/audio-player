@@ -36,10 +36,10 @@ export const Footer: FC = () => {
 
   return (
     <footer className="fixed bottom-0 left-0 w-full bg-white">
-      <div className="px-5 py-7 flex justify-between">
-        <div className="flex items-center max-w-[388px] w-full sm:max-w-full sm:pr-12">
+      <div className="px-5 py-7 flex justify-between sm:flex-col sm:items-center sm:px-4">
+        <div className="flex items-center max-w-[260px] md:max-w-[150px] w-full sm:pr-12 sm:mb-2 sm:!max-w-[300px]">
           <img
-            className="w-15 h-15 object-cover mr-3"
+            className="w-15 h-15 object-cover mr-3 md:h-11 md:w-11"
             src={track.image}
             alt={track.artist.name}
           />
@@ -48,7 +48,7 @@ export const Footer: FC = () => {
             <p className="text-xs text-[#AAAAAA]">{track.artist.name}</p>
           </div>
         </div>
-        <div className="min-w-[680px] flex flex-col items-center justify-between">
+        <div className="max-w-[800px] w-full flex flex-col items-center justify-between">
           <div className="mb-3 flex justify-center">
             <Button
               className="group"
@@ -106,8 +106,8 @@ export const Footer: FC = () => {
               onClick={toggleLoop}
             />
           </div>
-          <div className="w-full h-8 flex items-center group relative">
-            <span className="absolute left-0 transform -translate-x-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="w-full h-8 flex items-center group relative sm:px-2">
+            <span className="sm:text-xs sm:-translate-x-2 absolute left-0 transform -translate-x-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {formatDuration(currentTime * 1000)}
             </span>
 
@@ -116,12 +116,11 @@ export const Footer: FC = () => {
               type="range"
               min="0"
               max={track.duration / 1000}
-              defaultValue="0"
               value={currentTime}
               onInput={changeAudioToPlayhead}
             />
 
-            <span className="absolute right-0 transform translate-x-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="sm:text-xs sm:translate-x-2 absolute right-0 transform translate-x-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {formatDuration(track.duration)}
             </span>
           </div>

@@ -9,7 +9,7 @@ export const TracksScreen: FC<TracksScreenProps> = ({
 }) => {
   return (
     <section>
-      <h2 className="text-3xl mb-1">Треки</h2>
+      <h2 className="text-3xl mb-1 sm:pt-4">Треки</h2>
       <div className="flex text-[#a4a4a4] text-xs items-center py-3 lg:hidden">
         <div className="w-full max-w-10">№</div>
         <div className="w-full max-w-[434px]">НАЗВАНИЕ</div>
