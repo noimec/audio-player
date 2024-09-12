@@ -58,7 +58,7 @@ export const AddToPlaylistModal: FC<AddToPlaylistModalProps> = ({
                   className="w-[40px] h-[40px] mr-2"
                   src={
                     playlist.songs && playlist.songs[0]
-                      ? playlist.songs[0].image
+                      ? playlist.songs[playlist.songs.length - 1].image
                       : "/images/default-cover.jpg"
                   }
                   alt={playlist.name}
@@ -66,7 +66,7 @@ export const AddToPlaylistModal: FC<AddToPlaylistModalProps> = ({
                 <div className="flex flex-col">
                   <div className="text-sm">{playlist.name}</div>
                   <span className="text-xs text-[#AAAAAA]">
-                    {playlist.songs.length} треков
+                    {playlist.songs && playlist.songs[0] ? playlist.songs.length : 0} треков
                   </span>
                 </div>
               </li>

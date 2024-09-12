@@ -5,22 +5,22 @@ import { Button } from "../UI/Button";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { AddToPlaylistModal } from "../AddToPlaylistModal";
 import { TrackDropdownProps } from "../../types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { removeTrackInPlaylist } from "../../store/playlistsSlice";
+import { selectSelectedPlaylist, setSelectedPlaylist } from "../../store/selectedPlaylistSlice";
 
 export const TrackDropdown: FC<TrackDropdownProps> = ({
   isOpen,
   onClose,
   position,
   trackId,
-  selectedPlaylist,
-  setSelectedPlaylist,
 }) => {
   const dropdownRoot = document.getElementById("dropdown-root");
   const dispatch: AppDispatch = useDispatch();
   const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] =
     useState(false);
+  const selectedPlaylist = useSelector(selectSelectedPlaylist);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useOutsideClick(dropdownRef, onClose, isOpen);
@@ -28,7 +28,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
   if (!isOpen) return null;
 
   const handleRemoveTrackInPlaylists = async () => {
-    if (!selectedPlaylist || !setSelectedPlaylist || trackId === null) {
+    if (!selectedPlaylist || trackId === null) {
       console.error("No playlist selected or track ID is invalid");
       return;
     }
@@ -39,7 +39,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
           trackId: trackId,
         })
       ).unwrap();
-      setSelectedPlaylist(updatedPlaylists);
+      dispatch(setSelectedPlaylist(updatedPlaylists))
       onClose();
     } catch (error) {
       console.error("Failed remove track in playlist", error);

@@ -6,8 +6,6 @@ import { TracksScreenProps } from "../../types";
 
 export const TracksScreen: FC<TracksScreenProps> = ({
   tracks,
-  selectedPlaylist,
-  setSelectedPlaylist
 }) => {
   return (
     <section>
@@ -29,8 +27,6 @@ export const TracksScreen: FC<TracksScreenProps> = ({
             key={track.id}
             {...track}
             index={index + 1}
-            setSelectedPlaylist={setSelectedPlaylist}
-            selectedPlaylist={selectedPlaylist}
           />
         ))}
       </ul>

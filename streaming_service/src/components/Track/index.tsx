@@ -20,12 +20,10 @@ export const Track: FC<ITrack> = ({
   album,
   duration,
   createdAt,
-  selectedPlaylist,
   index,
   likes,
   filename,
   path,
-  setSelectedPlaylist,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [localLikes, setLocalLikes] = useState(likes.length);
@@ -135,8 +133,6 @@ export const Track: FC<ITrack> = ({
         />
         {isDropdownOpen && (
           <TrackDropdown
-            setSelectedPlaylist={setSelectedPlaylist}
-            selectedPlaylist={selectedPlaylist}
             trackId={selectedTrackId}
             isOpen={isDropdownOpen}
             onClose={() => setIsDropdownOpen(false)}

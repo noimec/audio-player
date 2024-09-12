@@ -1,110 +1,38 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useRef } from "react";
+import cn from "classnames";
 
-import { RootState } from "../../store";
 import { Button } from "../UI/Button";
 import {
   PlayIcon,
   RepeatIcon,
   ShaffleIcon,
-  SkipBackIcon,
-  SkipNextIcon,
+  SkipIcon,
   VolumeIcon,
 } from "../../assets/svg";
 import { formatDuration } from "../../utils";
-import { setSelectedTrack } from "../../store/playerTrackSlice";
-import { selectTracks } from "../../store/tracksSlice";
+import { useAudio } from "../../hooks/useAudio";
 
 export const Footer: FC = () => {
-  const dispatch = useDispatch();
-  const track = useSelector(
-    (state: RootState) => state.playerTrack.selectedTrack
-  );
-  const tracks = useSelector(selectTracks);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [volume, setVolume] = useState(1);
-  const [loop, setLoop] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    if (track && audioRef.current) {
-      setCurrentTime(0);
-      if (audioRef.current) {
-        audioRef.current.src = `http://localhost:3000${track.path}`;
-        if (isPlaying) {
-          audioRef.current.play();
-        }
-      }
-    }
-  }, [track]);
+  const {
+    changeAudioToPlayhead,
+    currentTime,
+    handleTimeUpdate,
+    handleVolumeChange,
+    skipToNextTrack,
+    skipToPreviousTrack,
+    toggleLoop,
+    togglePlayPause,
+    track,
+    volume,
+    isPlaying,
+    loop,
+    isMuted,
+    toggleMute,
+  } = useAudio(audioRef);
 
-  const togglePlayPause = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  };
-
-  const changeAudioToPlayhead = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (audioRef.current && e.target) {
-      audioRef.current.currentTime = parseFloat(e.target.value);
-      setCurrentTime(parseFloat(e.target.value));
-    }
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const volumeValue = parseFloat(e.target.value);
-    setVolume(volumeValue);
-    if (audioRef.current) {
-      audioRef.current.volume = volumeValue;
-    }
-  };
-
-  const skipToNextTrack = () => {
-    if (track) {
-      if (tracks.length === track.id) {
-        dispatch(setSelectedTrack(tracks[0]));
-      } else {
-        dispatch(setSelectedTrack(tracks[track.id]));
-      }
-    }
-  };
-
-  const skipToPreviousTrack = () => {
-    if (track) {
-      if (track.id === 1) {
-        dispatch(setSelectedTrack(tracks[tracks.length - 1]));
-      } else {
-        dispatch(setSelectedTrack(tracks[track.id - 2]));
-      }
-    }
-  };
-
-  const toggleLoop = () => {
-    setLoop(!loop);
-    if (audioRef.current) {
-      audioRef.current.loop = !loop;
-    }
-  };
-
-  if (!track) {
-    return (
-      <footer className="fixed bottom-0 left-0 w-full bg-white">
-        No track selected
-      </footer>
-    );
-  }
+  if (!track) return;
 
   return (
     <footer className="fixed bottom-0 left-0 w-full bg-white">
@@ -120,28 +48,69 @@ export const Footer: FC = () => {
             <p className="text-xs text-[#AAAAAA]">{track.artist.name}</p>
           </div>
         </div>
-        <div className="min-w-[680px] flex flex-col items-center justify-center">
+        <div className="min-w-[680px] flex flex-col items-center justify-between">
           <div className="mb-3 flex justify-center">
-            <Button svg={<ShaffleIcon className="w-5 h-5 mr-2" />} />
             <Button
-              svg={<SkipBackIcon className="w-5 h-5 mr-2" />}
+              className="group"
+              svg={
+                <ShaffleIcon
+                  fill="group-hover:fill-[#FC6D3E] transition transition-transform duration-300 ease-out group-hover:scale-110"
+                  className="w-5 h-5 mr-2"
+                />
+              }
+            />
+            <Button
+              className="group"
+              svg={
+                <SkipIcon
+                  className="w-5 h-5 mr-2 rotate-180 transition-transform duration-300 ease-out group-hover:scale-110"
+                  fill="group-hover:fill-[#FC6D3E] transition"
+                />
+              }
               onClick={skipToPreviousTrack}
             />
             <Button
-              svg={<PlayIcon className="w-12 h-12" />}
+              className="group relative flex justify-center items-center w-12 h-12"
+              svg={
+                <PlayIcon
+                  className="w-12 h-12 transition-transform duration-300 ease-out group-hover:scale-110"
+                  fill={cn(
+                    "group-hover:fill-[#FC6D3E] transition-colors",
+                    isPlaying && "fill-[#FC6D3E]"
+                  )}
+                />
+              }
               onClick={togglePlayPause}
             />
             <Button
-              svg={<SkipNextIcon className="w-5 h-5 ml-2" />}
+              className="group"
+              svg={
+                <SkipIcon
+                  className="w-5 h-5 ml-2 transition-transform duration-300 ease-out group-hover:scale-110"
+                  fill="group-hover:fill-[#FC6D3E] transition"
+                />
+              }
               onClick={skipToNextTrack}
             />
             <Button
-              svg={<RepeatIcon className="w-5 h-5 ml-2" />}
+              className="group"
+              svg={
+                <RepeatIcon
+                  fill={cn(
+                    "group-hover:fill-[#FC6D3E] transition transition-transform duration-300 ease-out group-hover:scale-110",
+                    loop && "fill-[#FC6D3E]"
+                  )}
+                  className="w-5 h-5 ml-2"
+                />
+              }
               onClick={toggleLoop}
             />
           </div>
-          <div className="w-full flex">
-            <span>{formatDuration(currentTime * 1000)}</span>
+          <div className="w-full h-8 flex items-center group relative">
+            <span className="absolute left-0 transform -translate-x-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {formatDuration(currentTime * 1000)}
+            </span>
+
             <input
               className="w-full mx-3"
               type="range"
@@ -151,11 +120,26 @@ export const Footer: FC = () => {
               value={currentTime}
               onInput={changeAudioToPlayhead}
             />
-            <span>{formatDuration(track.duration)}</span>
+
+            <span className="absolute right-0 transform translate-x-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {formatDuration(track.duration)}
+            </span>
           </div>
         </div>
         <div className="flex items-center">
-          <VolumeIcon className="w-5 h-5" />
+          <Button
+            onClick={toggleMute}
+            className="group"
+            svg={
+              <VolumeIcon
+                fill={cn(
+                  "group-hover:stroke-[#FC6D3E] transition-transform duration-300 ease-out group-hover:scale-110",
+                  isMuted && "stroke-[#FC6D3E]"
+                )}
+                className="w-5 h-5"
+              />
+            }
+          />
           <input
             className="ml-2 bg-gray-700"
             type="range"

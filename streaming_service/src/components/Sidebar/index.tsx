@@ -9,15 +9,16 @@ import {
   SerachSvg,
   TracksSvg,
 } from "../../assets/svg";
-import { SidebarProps } from "../../types";
+import { IPlaylist, SidebarProps } from "../../types";
 import { PlaylistModal } from "../PlaylistModal";
 import { PlaylistRemoveModal } from "../PlaylistRemoveModal";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import {  setSelectedPlaylist } from "../../store/selectedPlaylistSlice";
+import { setScreen } from "../../store/screenSlice";
 
 export const Sidebar: FC<SidebarProps> = ({
   playlists,
-  onSwitchScreen,
-  onPlaylistSelect,
-  onSelectAllTracks,
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false);
@@ -25,6 +26,13 @@ export const Sidebar: FC<SidebarProps> = ({
     null
   );
 
+  const dispatch: AppDispatch = useDispatch();
+
+  const onPlaylistSelect = (playlist: IPlaylist) => {
+    dispatch(setSelectedPlaylist(playlist));
+    dispatch(setScreen("tracks"));
+  };
+  
   return (
     <aside className="bg-[#f5f5f5] max-w-[289px] w-full overflow-auto xl:max-w-[100%] xl:px-11 xl:py-5 sm:px-4 sm:py-5">
       <h2 className="absolute w-[1px] h-[1px] p-0 border-none overflow-hidden">
@@ -38,8 +46,8 @@ export const Sidebar: FC<SidebarProps> = ({
         <div className="flex flex-col mb-5 items-start">
           <Button
             onClick={() => {
-              onSwitchScreen("tracks");
-              onSelectAllTracks();
+              dispatch(setScreen('tracks'))
+              dispatch(setSelectedPlaylist(null))
             }}
             variant="aside"
             className="flex-row-reverse w-full"
@@ -53,7 +61,7 @@ export const Sidebar: FC<SidebarProps> = ({
             <span>Треки</span>
           </Button>
           <Button
-            onClick={() => onSwitchScreen("playlists")}
+            onClick={() => dispatch(setScreen('playlists'))}
             variant="aside"
             className="flex-row-reverse w-full"
             svg={

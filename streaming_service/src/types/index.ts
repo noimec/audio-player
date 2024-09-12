@@ -4,8 +4,6 @@ import type { FieldError, UseFormRegister } from "react-hook-form";
 export type SwitchScreenType = "tracks" | "playlists"
 
 export interface ITrack {
-    selectedPlaylist?: IPlaylist | null;
-    setSelectedPlaylist?: React.Dispatch<React.SetStateAction<IPlaylist | null>>
     index?: number
     id: number;
     album: Album;
@@ -106,8 +104,6 @@ export interface AuthState {
 
 export interface TracksScreenProps {
     tracks: ITrack[];
-    selectedPlaylist: IPlaylist | null;
-    setSelectedPlaylist: React.Dispatch<React.SetStateAction<IPlaylist | null>>
 }
 
 export interface PlaylistModalProps {
@@ -138,14 +134,9 @@ export interface PlaylistsScreenProps {
 
 export interface SidebarProps {
     playlists: IPlaylist[];
-    onSwitchScreen: (screen: SwitchScreenType) => void;
-    onPlaylistSelect: (playlist: IPlaylist) => void;
-    onSelectAllTracks: () => void;
 }
 
 export interface TrackDropdownProps {
-    selectedPlaylist?: IPlaylist | null;
-    setSelectedPlaylist?: React.Dispatch<React.SetStateAction<IPlaylist | null>>
     isOpen: boolean;
     onClose: () => void;
     position: { top: number; left: number };
