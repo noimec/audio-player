@@ -13,8 +13,8 @@ import { PlaylistModal } from "../PlaylistModal";
 import { PlaylistRemoveModal } from "../PlaylistRemoveModal";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { setSelectedPlaylist } from "../../store/selectedPlaylistSlice";
 import { setScreen } from "../../store/screenSlice";
+import { setViewedPlaylist } from "../../store/selectedPlaylistSlice";
 
 export const Sidebar: FC<SidebarProps> = ({ playlists }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -26,7 +26,7 @@ export const Sidebar: FC<SidebarProps> = ({ playlists }) => {
   const dispatch: AppDispatch = useDispatch();
 
   const onPlaylistSelect = (playlist: IPlaylist) => {
-    dispatch(setSelectedPlaylist(playlist));
+    dispatch(setViewedPlaylist(playlist));
     dispatch(setScreen("tracks"));
   };
 
@@ -40,7 +40,7 @@ export const Sidebar: FC<SidebarProps> = ({ playlists }) => {
           <Button
             onClick={() => {
               dispatch(setScreen("tracks"));
-              dispatch(setSelectedPlaylist(null));
+              dispatch(setViewedPlaylist(null));
             }}
             text="Треки"
             variant="aside"

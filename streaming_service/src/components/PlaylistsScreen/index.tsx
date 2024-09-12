@@ -7,8 +7,8 @@ import { PlaylistsScreenProps } from "../../types";
 export const PlaylistsScreen: FC<PlaylistsScreenProps> = ({ playlists }) => {
   return (
     <section>
-      <h2 className="text-3xl mb-1">Плейлисты</h2>
-      <ul className="flex flex-wrap">
+      <h2 className="text-3xl mb-1 sm:pt-3">Плейлисты</h2>
+      <ul className="flex flex-wrap sm:flex-col">
         {playlists.map(({ name, id, songs }) => (
           <li
             className={cn(

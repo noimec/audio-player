@@ -1,30 +1,34 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { IPlaylist } from "../types";
 import { RootState } from ".";
 
 interface SelectedPlaylistState {
-    selectedPlaylist: IPlaylist | null;
+    currentPlaylist: IPlaylist | null;
+    viewedPlaylist: IPlaylist | null;
 }
 
 const initialState: SelectedPlaylistState = {
-    selectedPlaylist: null,
+    currentPlaylist: null,
+    viewedPlaylist: null,
 };
 
 const selectedPlaylistSlice = createSlice({
     name: "selectedPlaylist",
     initialState,
     reducers: {
-        setSelectedPlaylist: (state, action: PayloadAction<IPlaylist | null>) => {
-            state.selectedPlaylist = action.payload;
+        setCurrentPlaylist: (state, action) => {
+            state.currentPlaylist = action.payload;
         },
-        clearSelectedPlaylist: (state) => {
-            state.selectedPlaylist = null;
+        setViewedPlaylist: (state, action) => {
+            state.viewedPlaylist = action.payload;
         },
     },
 });
 
-export const { setSelectedPlaylist, clearSelectedPlaylist } = selectedPlaylistSlice.actions;
-export const selectSelectedPlaylist = (state: RootState) => state.selectedPlaylist.selectedPlaylist;
+export const { setCurrentPlaylist, setViewedPlaylist } = selectedPlaylistSlice.actions;
+
+export const selectCurrentPlaylist = (state: RootState) => state.selectedPlaylist.currentPlaylist;
+export const selectViewedPlaylist = (state: RootState) => state.selectedPlaylist.viewedPlaylist;
 
 export default selectedPlaylistSlice.reducer;

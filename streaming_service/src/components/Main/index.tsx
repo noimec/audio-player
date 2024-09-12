@@ -8,12 +8,10 @@ import { AppDispatch } from "../../store";
 import { fetchTracks, selectTracks } from "../../store/tracksSlice";
 import { fetchPlaylists, selectPlaylists } from "../../store/playlistsSlice";
 import { selectScren } from "../../store/screenSlice";
-import {
-  selectSelectedPlaylist,
-} from "../../store/selectedPlaylistSlice";
+import { selectViewedPlaylist } from "../../store/selectedPlaylistSlice";
 
 export const Main: FC = () => {
-  const selectedPlaylist = useSelector(selectSelectedPlaylist);
+  const selectedPlaylist = useSelector(selectViewedPlaylist);
   const screen = useSelector(selectScren);
   const tracks = useSelector(selectTracks);
   const playlists = useSelector(selectPlaylists);

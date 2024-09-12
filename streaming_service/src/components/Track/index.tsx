@@ -8,9 +8,10 @@ import { ITrack } from "../../types";
 import { TrackDropdown } from "../TrackDropdown";
 import { formatDuration, timeAgo } from "../../utils";
 import { AppDispatch } from "../../store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLikeTrack, setUnlikeTrack } from "../../store/tracksSlice";
 import { setSelectedTrack } from "../../store/playerTrackSlice";
+import { selectViewedPlaylist, setCurrentPlaylist } from "../../store/selectedPlaylistSlice";
 
 export const Track: FC<ITrack> = ({
   id,
@@ -31,6 +32,8 @@ export const Track: FC<ITrack> = ({
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLDivElement>(null);
   const dispatch: AppDispatch = useDispatch();
+
+  const selectedPlaylist = useSelector(selectViewedPlaylist)
 
   const formattedDuration = useMemo(() => formatDuration(duration), [duration]);
   const formattedTimeAgo = useMemo(() => timeAgo(createdAt), [createdAt]);
@@ -83,7 +86,10 @@ export const Track: FC<ITrack> = ({
 
   return (
     <li
-      onClick={handleSelectTrack}
+      onClick={()=>{
+        dispatch(setCurrentPlaylist(selectedPlaylist))
+        handleSelectTrack()
+      }}
       className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5"
     >
       <div className="w-full max-w-10 md:max-w-4 sm:hidden">{index}</div>

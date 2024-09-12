@@ -4,16 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectTracks } from "../store/tracksSlice";
 import { RootState } from "../store";
 import { setSelectedTrack } from "../store/playerTrackSlice";
-import { selectScren } from "../store/screenSlice";
-import { selectPlaylists } from "../store/playlistsSlice";
+import { selectCurrentPlaylist } from "../store/selectedPlaylistSlice";
 
 export const useAudio = (audioRef: React.MutableRefObject<HTMLAudioElement | null>) => {
     const tracks = useSelector(selectTracks);
     const track = useSelector(
         (state: RootState) => state.playerTrack.selectedTrack
     );
-    const screen = useSelector(selectScren);
-    const playlists = useSelector(selectPlaylists)
+    const selectedPlaylist = useSelector(selectCurrentPlaylist)
     const dispatch = useDispatch();
 
     const [loop, setLoop] = useState(false);
@@ -70,20 +68,51 @@ export const useAudio = (audioRef: React.MutableRefObject<HTMLAudioElement | nul
 
     const skipToNextTrack = () => {
         if (track) {
-            if (tracks.length === track.id) {
-                dispatch(setSelectedTrack(tracks[0]));
+            if (!selectedPlaylist) {
+                if (tracks.length === track.id) {
+                    dispatch(setSelectedTrack(tracks[0]));
+                } else {
+                    dispatch(setSelectedTrack(tracks[track.id]));
+                }
             } else {
-                dispatch(setSelectedTrack(tracks[track.id]));
+                const currentIndex = selectedPlaylist.songs.findIndex((song) => song.id === track.id);
+
+                if (currentIndex === -1) {
+                    console.error('Текущий трек не найден в списке плейлиста');
+                    return;
+                }
+
+                if (currentIndex === selectedPlaylist.songs.length - 1) {
+                    dispatch(setSelectedTrack(selectedPlaylist.songs[0]));
+                } else {
+                    dispatch(setSelectedTrack(selectedPlaylist.songs[currentIndex + 1]));
+                }
             }
         }
     };
 
     const skipToPreviousTrack = () => {
-        if (track) {
+        if (!track) return;
+
+        if (!selectedPlaylist) {
             if (track.id === 1) {
                 dispatch(setSelectedTrack(tracks[tracks.length - 1]));
             } else {
                 dispatch(setSelectedTrack(tracks[track.id - 2]));
+            }
+        } else {
+            const currentIndex = selectedPlaylist.songs.findIndex((song) => song.id === track.id);
+
+            if (currentIndex === -1) {
+                console.error('Текущий трек не найден в списке плейлиста');
+                return;
+            }
+
+            if (currentIndex === 0) {
+                dispatch(setSelectedTrack(selectedPlaylist.songs[selectedPlaylist.songs.length - 1]));
+
+            } else {
+                dispatch(setSelectedTrack(selectedPlaylist.songs[currentIndex - 1]));
             }
         }
     };

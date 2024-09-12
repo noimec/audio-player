@@ -8,10 +8,7 @@ import { TrackDropdownProps } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { removeTrackInPlaylist } from "../../store/playlistsSlice";
-import {
-  selectSelectedPlaylist,
-  setSelectedPlaylist,
-} from "../../store/selectedPlaylistSlice";
+import { selectViewedPlaylist, setViewedPlaylist } from "../../store/selectedPlaylistSlice";
 
 export const TrackDropdown: FC<TrackDropdownProps> = ({
   isOpen,
@@ -23,7 +20,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
   const dispatch: AppDispatch = useDispatch();
   const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] =
     useState(false);
-  const selectedPlaylist = useSelector(selectSelectedPlaylist);
+  const selectedPlaylist = useSelector(selectViewedPlaylist);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useOutsideClick(dropdownRef, onClose, isOpen);
@@ -42,7 +39,7 @@ export const TrackDropdown: FC<TrackDropdownProps> = ({
           trackId: trackId,
         })
       ).unwrap();
-      dispatch(setSelectedPlaylist(updatedPlaylists));
+      dispatch(setViewedPlaylist(updatedPlaylists));
       onClose();
     } catch (error) {
       console.error("Failed remove track in playlist", error);

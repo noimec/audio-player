@@ -50,7 +50,6 @@ export const Header: FC = () => {
       >
         <span className="mr-auto sm:m-0">Tatiana L.</span>
       </Button>
-      <button></button>
     </header>
   );
 };
