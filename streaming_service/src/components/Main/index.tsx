@@ -9,12 +9,14 @@ import { fetchTracks, selectTracks } from "../../store/tracksSlice";
 import { fetchPlaylists, selectPlaylists } from "../../store/playlistsSlice";
 import { selectScren } from "../../store/screenSlice";
 import { selectViewedPlaylist } from "../../store/selectedPlaylistSlice";
+import { selectFilteredTracks } from "../../store/filteredTracksSlise";
 
 export const Main: FC = () => {
   const selectedPlaylist = useSelector(selectViewedPlaylist);
   const screen = useSelector(selectScren);
   const tracks = useSelector(selectTracks);
   const playlists = useSelector(selectPlaylists);
+  const filteredTracks = useSelector(selectFilteredTracks)
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -31,7 +33,7 @@ export const Main: FC = () => {
       <div className="flex-1 block p-[35px_53px_145px_46px] sm:p-[0px_16px_145px_16px] sm:bg-[#f5f5f5]">
         {screen === "tracks" && (
           <TracksScreen
-            tracks={selectedPlaylist ? selectedPlaylist.songs : tracks}
+            tracks={selectedPlaylist ? selectedPlaylist.songs : filteredTracks?.length ? filteredTracks : tracks}
           />
         )}
         {screen === "playlists" && <PlaylistsScreen playlists={playlists} />}

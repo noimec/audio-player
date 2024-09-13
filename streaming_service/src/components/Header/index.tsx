@@ -4,8 +4,11 @@ import cn from "classnames";
 import { Link } from "../UI/Link";
 import { LogoSvg, RightArrowSvg } from "../../assets/svg";
 import { Button } from "../UI/Button";
+import { useSearchInput } from "../../hooks/useSearchInput";
 
 export const Header: FC = () => {
+  const { handleInputChange, inputValue } = useSearchInput();
+
   return (
     <header className="flex pr-12 md:pr-1 sm:p-4 sm:flex-col">
       <Link
@@ -23,6 +26,8 @@ export const Header: FC = () => {
         )}
       >
         <input
+          value={inputValue}
+          onChange={handleInputChange}
           className={cn(
             "outline-none transition focus-visible:outline-[#e8e8e8] max-w-[1010px] border-none w-[100%]",
             'min-w-[250px] pt-4 pr-3 pb-4 pl-12 rounded-[30px] bg-[#f5f5f5] text-sm bg-[url("/images/search.svg")] bg-no-repeat bg-[left_15px_top_13px]',
@@ -35,7 +40,7 @@ export const Header: FC = () => {
       <Button
         className={cn(
           "outline-none transition focus-visible:outline-[#e8e8e8] rounded-[30px] overflow-hidden",
-          "opacity-100 bg-[#e8e8e8]", //active &&
+          "opacity-100 bg-[#e8e8e8]",
           "bg-[#f5f5f5] self-center p-[5px_13px] flex items-center max-w-[246px] w-[100%]",
           "xl:hover:opacity-60 lg:ml-auto sm:bg-transparent sm:text-xs sm:p-0 sm:max-w-[max-content]"
         )}
