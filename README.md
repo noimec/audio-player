@@ -52,7 +52,7 @@ $ cd play-now
 ## Установка зависимостей и инициализация БД
 
 ```bash
-$ npm install
+$ npm install --force
 $ npm run migration
 ```
 

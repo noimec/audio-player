@@ -1,11 +1,11 @@
 ## Description
 
-Репозиторий содержит серверную часть приложения c использованием NestJS - express, Swagger, TypeOrm и SQLite. 
+Репозиторий содержит серверную часть приложения c использованием NestJS - express, Swagger, TypeOrm и SQLite.
 
 ## Установка зависимостей и инициализация БД
 
 ```bash
-$ npm install
+$ npm install --force
 $ npm run migration
 ```
 
