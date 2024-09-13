@@ -45,7 +45,6 @@ export const setUnlikeTrack = createAsyncThunk(
   }
 );
 
-
 const initialState: TracksState = {
   tracks: [],
   loading: false,

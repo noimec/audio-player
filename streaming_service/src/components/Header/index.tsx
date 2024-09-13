@@ -2,9 +2,9 @@ import { FC } from "react";
 import cn from "classnames";
 
 import { Link } from "../UI/Link";
-import { LogoSvg, RightArrowSvg } from "../../assets/svg";
-import { Button } from "../UI/Button";
+import { LogoSvg } from "../../assets/svg";
 import { useSearchInput } from "../../hooks/useSearchInput";
+import { Profile } from "../Profile";
 
 export const Header: FC = () => {
   const { handleInputChange, inputValue } = useSearchInput();
@@ -37,24 +37,7 @@ export const Header: FC = () => {
           placeholder="ЧТО БУДЕМ ИСКАТЬ?"
         />
       </div>
-      <Button
-        className={cn(
-          "outline-none transition focus-visible:outline-[#e8e8e8] rounded-[30px] overflow-hidden",
-          "opacity-100 bg-[#e8e8e8]",
-          "bg-[#f5f5f5] self-center p-[5px_13px] flex items-center max-w-[246px] w-[100%]",
-          "xl:hover:opacity-60 lg:ml-auto sm:bg-transparent sm:text-xs sm:p-0 sm:max-w-[max-content]"
-        )}
-        svg={<RightArrowSvg className="sm:hidden" />}
-        image={
-          <img
-            className="w-11 h-11 rounded-full mr-3"
-            src="/images/user.jpg"
-            alt="Изображение пользователя"
-          />
-        }
-      >
-        <span className="mr-auto sm:m-0">Tatiana L.</span>
-      </Button>
+      <Profile />
     </header>
   );
 };

@@ -1,20 +1,15 @@
 import cn from "classnames";
-import { FC } from "react";
+import { forwardRef } from "react";
 
 import { IButton } from "../../../types";
 
-export const Button: FC<IButton> = ({
-  children,
-  svg,
-  className,
-  image,
-  variant,
-  active,
-  onClick,
-  text
-}) => {
-  return (
+export const Button = forwardRef<HTMLButtonElement, IButton>(
+  (
+    { children, svg, className, image, variant, active, onClick, text },
+    ref
+  ) => (
     <button
+      ref={ref}
       onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50",
@@ -28,9 +23,12 @@ export const Button: FC<IButton> = ({
         variant === "dropdown" &&
           "focus:outline-none focus:rounded-full focus:border-[#aaaaaa] group relative z-2 w-10 h-10 flex items-center justify-center rounded-full border border-transparent transition hover:border-[#aaaaaa]",
         variant === "dropdown" && active && "rotate-90",
-        variant === "close" && "bg-[#fc6d3e] hover:bg-[#ee5d2c] hover:opacity-100 text-white p-2 rounded-lg opacity-90 self-end transition",
-        variant === "submit" && "bg-blue-500 hover:bg-blue-700 hover:opacity-100 text-white p-2 rounded-lg opacity-90 self-end transition",
-        variant === "menu" && "hover:bg-[#F5F5F5] hover:opacity-90 p-2 rounded-lg self-end w-full transition",
+        variant === "close" &&
+          "bg-[#fc6d3e] hover:bg-[#ee5d2c] hover:opacity-100 text-white p-2 rounded-lg opacity-90 self-end transition",
+        variant === "submit" &&
+          "bg-blue-500 hover:bg-blue-700 hover:opacity-100 text-white p-2 rounded-lg opacity-90 self-end transition",
+        variant === "menu" &&
+          "hover:bg-[#F5F5F5] hover:opacity-90 p-2 rounded-lg self-end w-full transition",
         className
       )}
     >
@@ -39,5 +37,5 @@ export const Button: FC<IButton> = ({
       {text}
       {svg}
     </button>
-  );
-};
+  )
+);

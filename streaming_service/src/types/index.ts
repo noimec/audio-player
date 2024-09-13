@@ -144,18 +144,15 @@ export interface TrackDropdownProps {
 }
 
 export interface IButton
-    extends React.DetailedHTMLProps<
-        React.ButtonHTMLAttributes<HTMLButtonElement>,
-        HTMLButtonElement
-    > {
-    children?: ReactElement;
-    className?: string;
-    svg?: ReactNode;
-    image?: ReactNode;
-    text?: string;
-    variant?: "aside" | "like" | "dropdown" | 'close' | 'submit' | 'menu';
-    active?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  children?: React.ReactNode;
+  className?: string;
+  svg?: React.ReactNode;
+  image?: React.ReactNode;
+  text?: string;
+  variant?: "aside" | "like" | "dropdown" | "close" | "submit" | "menu";
+  active?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export interface ILink
@@ -168,3 +165,9 @@ export interface ILink
     className?: string;
     children?: ReactElement;
 }
+
+export interface ProfileDropdownProps {
+    onClose: () => void;
+    position: { top: number; left: number };
+    isOpen: boolean;
+  }
