@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { removePlaylist } from "../../store/playlistsSlice";
-import { PlaylistRemoveModalProps } from "../../types";
 import { Button } from "../UI/Button";
+import type { PlaylistRemoveModalProps } from "../../types/components";
 
 export const PlaylistRemoveModal: FC<PlaylistRemoveModalProps> = ({
   isOpen,

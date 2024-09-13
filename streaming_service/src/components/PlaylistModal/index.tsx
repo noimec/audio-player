@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { addPlaylist } from "../../store/playlistsSlice";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { PlaylistModalProps } from "../../types";
 import { Button } from "../UI/Button";
+import type { PlaylistModalProps } from "../../types/components";
 
 export const PlaylistModal: FC<PlaylistModalProps> = ({ isOpen, onClose }) => {
   const modalRoot = document.getElementById("modal-root");

@@ -1,12 +1,20 @@
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
 
 import { DataSvg, TimeSvg } from "../../assets/svg";
 import { Track } from "../Track";
-import { TracksScreenProps } from "../../types";
+import type { TracksScreenProps } from "../../types/components";
 
-export const TracksScreen: FC<TracksScreenProps> = ({
-  tracks,
-}) => {
+export const TracksScreen: FC<TracksScreenProps> = ({ tracks }) => {
+  const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+
+  const handleDropdownOpen = useCallback((trackId: number) => {
+    setOpenDropdownId((prevId) => (prevId === trackId ? null : trackId));
+  }, []);
+
+  const handleDropdownClose = useCallback(() => {
+    setOpenDropdownId(null);
+  }, []);
+
   return (
     <section>
       <h2 className="text-3xl mb-1 sm:pt-4">Треки</h2>
@@ -22,13 +30,17 @@ export const TracksScreen: FC<TracksScreenProps> = ({
         </div>
       </div>
       <ul>
-        {tracks && tracks.map((track, index) => (
-          <Track
-            key={track.id}
-            {...track}
-            index={index + 1}
-          />
-        ))}
+        {tracks &&
+          tracks.map((track, index) => (
+            <Track
+              key={track.id}
+              {...track}
+              index={index + 1}
+              isDropdownOpen={track.id === openDropdownId}
+              onDropdownOpen={() => handleDropdownOpen(track.id)}
+              onDropdownClose={handleDropdownClose}
+            />
+          ))}
       </ul>
     </section>
   );

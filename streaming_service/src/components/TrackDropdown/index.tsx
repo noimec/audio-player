@@ -4,11 +4,11 @@ import { createPortal } from "react-dom";
 import { Button } from "../UI/Button";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { AddToPlaylistModal } from "../AddToPlaylistModal";
-import { TrackDropdownProps } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { removeTrackInPlaylist } from "../../store/playlistsSlice";
 import { selectViewedPlaylist, setViewedPlaylist } from "../../store/selectedPlaylistSlice";
+import type { TrackDropdownProps } from "../../types/components";
 
 export const TrackDropdown: FC<TrackDropdownProps> = ({
   isOpen,

@@ -1,8 +1,8 @@
 import { FC } from "react";
 
 import { Header } from "../Header";
-import { LayoutProps } from "../../types";
 import { Footer } from "../Footer/index.tsx";
+import type { LayoutProps } from "../../types/components/index.ts";
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   return (

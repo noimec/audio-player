@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { FormInputProps} from '../../types/index.ts'
+
+import type { FormInputProps } from "../../types/components";
 
 export const FormInput: FC<FormInputProps> = ({
   id,

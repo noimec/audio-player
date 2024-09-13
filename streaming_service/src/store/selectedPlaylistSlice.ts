@@ -1,12 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { IPlaylist } from "../types";
-import { RootState } from ".";
-
-interface SelectedPlaylistState {
-    currentPlaylist: IPlaylist | null;
-    viewedPlaylist: IPlaylist | null;
-}
+import type { RootState } from ".";
+import type { SelectedPlaylistState } from "./types";
 
 const initialState: SelectedPlaylistState = {
     currentPlaylist: null,

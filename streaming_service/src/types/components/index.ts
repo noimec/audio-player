@@ -1,7 +1,5 @@
-import { ReactElement, ReactNode } from "react";
-import type { FieldError, UseFormRegister } from "react-hook-form";
-
-export type SwitchScreenType = "tracks" | "playlists"
+import { ReactNode } from "react";
+import { FieldError, UseFormRegister } from "react-hook-form";
 
 export interface ITrack {
     index?: number
@@ -15,6 +13,9 @@ export interface ITrack {
     likes: { id: number, username: string }[]
     name: string;
     path: string;
+    isDropdownOpen?: boolean;
+    onDropdownOpen?: () => void;
+    onDropdownClose?: () => void;
 }
 
 export interface Album {
@@ -30,6 +31,8 @@ export interface Artist {
     image: string;
     name: string;
 }
+
+export type SwitchScreenType = "tracks" | "playlists"
 
 export interface IPlaylist {
     id: number
@@ -85,22 +88,9 @@ export interface FormInputProps {
     };
 }
 
-export interface TracksState {
-    tracks: ITrack[];
-    loading: boolean;
-    error: string | null;
-}
-
-export interface PlaylistsState {
-    playlists: IPlaylist[],
-    loading: boolean,
-    error: string | null,
-}
-
 export interface AuthState {
     token: string | null;
 }
-
 
 export interface TracksScreenProps {
     tracks: ITrack[];
@@ -138,36 +128,13 @@ export interface SidebarProps {
 
 export interface TrackDropdownProps {
     isOpen: boolean;
-    onClose: () => void;
+    onClose: () => void | undefined;
     position: { top: number; left: number };
     trackId: number | null;
-}
-
-export interface IButton
-  extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  children?: React.ReactNode;
-  className?: string;
-  svg?: React.ReactNode;
-  image?: React.ReactNode;
-  text?: string;
-  variant?: "aside" | "like" | "dropdown" | "close" | "submit" | "menu";
-  active?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}
-
-export interface ILink
-    extends React.DetailedHTMLProps<
-        React.AnchorHTMLAttributes<HTMLAnchorElement>,
-        HTMLAnchorElement
-    > {
-    href: string;
-    svg?: ReactNode;
-    className?: string;
-    children?: ReactElement;
 }
 
 export interface ProfileDropdownProps {
     onClose: () => void;
     position: { top: number; left: number };
     isOpen: boolean;
-  }
+}

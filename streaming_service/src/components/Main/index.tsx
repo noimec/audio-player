@@ -1,10 +1,10 @@
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import type { AppDispatch } from "../../store";
 import { Sidebar } from "../Sidebar";
 import { PlaylistsScreen } from "../PlaylistsScreen";
 import { TracksScreen } from "../TracksScreen";
-import { AppDispatch } from "../../store";
 import { fetchTracks, selectTracks } from "../../store/tracksSlice";
 import { fetchPlaylists, selectPlaylists } from "../../store/playlistsSlice";
 import { selectScren } from "../../store/screenSlice";

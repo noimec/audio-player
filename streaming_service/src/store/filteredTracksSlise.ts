@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from ".";
-import { ITrack } from "../types";
-
-interface FilteredTracksState {
-    tracks: ITrack[] | null;
-}
+import type { FilteredTracksState } from "./types";
+import type { ITrack } from "../types/components";
 
 const initialState: FilteredTracksState = {
     tracks: null,

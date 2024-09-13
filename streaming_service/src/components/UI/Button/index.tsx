@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { forwardRef } from "react";
 
-import { IButton } from "../../../types";
+import type { IButton } from "../../../types/ui";
 
 export const Button = forwardRef<HTMLButtonElement, IButton>(
   (

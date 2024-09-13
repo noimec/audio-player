@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ITrack } from "../types";
 
-interface PlayerTrackState {
-    selectedTrack: ITrack | null;
-}
+import type { PlayerTrackState } from "./types";
+import type { ITrack } from "../types/components";
 
 const initialState: PlayerTrackState = {
     selectedTrack: null,

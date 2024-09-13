@@ -4,14 +4,17 @@ import cn from "classnames";
 import { Button } from "../UI/Button";
 import { DropdownSvg, LikeSvg } from "../../assets/svg";
 import { Link } from "../UI/Link";
-import { ITrack } from "../../types";
 import { TrackDropdown } from "../TrackDropdown";
 import { formatDuration, timeAgo } from "../../utils";
 import { AppDispatch } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { setLikeTrack, setUnlikeTrack } from "../../store/tracksSlice";
 import { setSelectedTrack } from "../../store/playerTrackSlice";
-import { selectViewedPlaylist, setCurrentPlaylist } from "../../store/selectedPlaylistSlice";
+import {
+  selectViewedPlaylist,
+  setCurrentPlaylist,
+} from "../../store/selectedPlaylistSlice";
+import type { ITrack } from "../../types/components";
 
 export const Track: FC<ITrack> = ({
   id,
@@ -25,15 +28,17 @@ export const Track: FC<ITrack> = ({
   likes,
   filename,
   path,
+  isDropdownOpen,
+  onDropdownOpen,
+  onDropdownClose,
 }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [localLikes, setLocalLikes] = useState(likes.length);
   const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLDivElement>(null);
   const dispatch: AppDispatch = useDispatch();
 
-  const selectedPlaylist = useSelector(selectViewedPlaylist)
+  const selectedPlaylist = useSelector(selectViewedPlaylist);
 
   const formattedDuration = useMemo(() => formatDuration(duration), [duration]);
   const formattedTimeAgo = useMemo(() => timeAgo(createdAt), [createdAt]);
@@ -65,7 +70,7 @@ export const Track: FC<ITrack> = ({
       });
     }
     setSelectedTrackId(id);
-    setIsDropdownOpen(true);
+    onDropdownOpen!();
   };
 
   const onToggleLikeTrack = async () => {
@@ -86,9 +91,9 @@ export const Track: FC<ITrack> = ({
 
   return (
     <li
-      onClick={()=>{
-        dispatch(setCurrentPlaylist(selectedPlaylist))
-        handleSelectTrack()
+      onClick={() => {
+        dispatch(setCurrentPlaylist(selectedPlaylist));
+        handleSelectTrack();
       }}
       className="flex relative py-4 items-center sm:bg-white sm:py-0 sm:mb-5"
     >
@@ -138,11 +143,11 @@ export const Track: FC<ITrack> = ({
           className="group"
           svg={<DropdownSvg />}
         />
-        {isDropdownOpen && (
+        {isDropdownOpen && onDropdownClose && (
           <TrackDropdown
             trackId={selectedTrackId}
             isOpen={isDropdownOpen}
-            onClose={() => setIsDropdownOpen(false)}
+            onClose={onDropdownClose}
             position={dropdownPosition}
           />
         )}

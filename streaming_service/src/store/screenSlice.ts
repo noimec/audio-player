@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { SwitchScreenType } from "../types";
 import { RootState } from ".";
-
-interface ScreenSliceState {
-    screen: SwitchScreenType;
-}
+import type { ScreenSliceState } from "./types";
+import type { SwitchScreenType } from "../types/components";
 
 const initialState: ScreenSliceState = {
     screen: 'tracks',

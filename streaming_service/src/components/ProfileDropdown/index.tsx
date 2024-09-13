@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { Button } from "../UI/Button";
-import { ProfileDropdownProps } from "../../types";
 import { deleteCookie } from "../../utils";
+import type { ProfileDropdownProps } from "../../types/components";
 
 export const ProfileDropdown: FC<ProfileDropdownProps> = ({
   onClose,

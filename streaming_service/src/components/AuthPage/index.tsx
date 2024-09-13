@@ -2,12 +2,12 @@ import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import type { LoginFormData, RegisterFormData, FormData } from "../../types";
 import { login, registerUser } from "../../api/auth";
 import { FormInput } from "../FormInput";
 import { loginFields, registerFields } from "../../data/FormData";
 import { Button } from "../UI/Button";
 import { LoginIcon, RegisterIcon } from "../../assets/svg";
+import type { FormData, LoginFormData, RegisterFormData } from "../../types/components";
 
 export const AuthPage: FC = () => {
   const [authState, setAuthState] = useState<"Login" | "Register">("Register");

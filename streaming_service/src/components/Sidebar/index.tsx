@@ -8,13 +8,13 @@ import {
   RemoveIcon,
   TracksSvg,
 } from "../../assets/svg";
-import { IPlaylist, SidebarProps } from "../../types";
 import { PlaylistModal } from "../PlaylistModal";
 import { PlaylistRemoveModal } from "../PlaylistRemoveModal";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { setScreen } from "../../store/screenSlice";
 import { setViewedPlaylist } from "../../store/selectedPlaylistSlice";
+import type { IPlaylist, SidebarProps } from "../../types/components";
 
 export const Sidebar: FC<SidebarProps> = ({ playlists }) => {
   const [isModalOpen, setModalOpen] = useState(false);

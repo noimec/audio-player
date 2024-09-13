@@ -2,13 +2,13 @@ import { FC, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AppDispatch } from "../../store";
+import type { AddToPlaylistModalProps } from "../../types/components";
+import type { AppDispatch } from "../../store";
 import {
   addTrackToPlaylist,
   selectPlaylists,
 } from "../../store/playlistsSlice";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { AddToPlaylistModalProps } from "../../types";
 import { Button } from "../UI/Button";
 
 export const AddToPlaylistModal: FC<AddToPlaylistModalProps> = ({

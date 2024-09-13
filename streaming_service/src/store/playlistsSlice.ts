@@ -3,8 +3,9 @@ import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from ".";
-import { IPlaylist, PlaylistsState } from "../types";
 import { getAuthHeaders } from "../utils";
+import type { IPlaylist } from "../types/components";
+import type { PlaylistsState } from "./types";
 
 export const fetchPlaylists = createAsyncThunk(
   "playlists/fetchPlaylists",

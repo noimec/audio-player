@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-import { ILink } from "../../../types";
+import type { ILinkProps } from "../../../types/ui";
 
-export const Link: FC<ILink> = ({ href, svg, className, children }) => {
+export const Link: FC<ILinkProps> = ({ href, svg, className, children, ...props }) => {
   return (
-    <a className={className} href={href}>
+    <a className={className} href={href} {...props}>
       {svg}
       {children}
     </a>

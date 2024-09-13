@@ -2,9 +2,10 @@ import axios from "axios";
 
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import { ITrack, TracksState } from "../types";
 import { RootState } from "../store";
 import { getAuthHeaders } from "../utils";
+import type { ITrack } from "../types/components";
+import type { TracksState } from "./types";
 
 export const fetchTracks = createAsyncThunk(
   "tracks/fetchTracks",
