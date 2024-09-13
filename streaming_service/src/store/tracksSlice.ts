@@ -1,49 +1,57 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from "../store";
-import { getAuthHeaders } from "../utils";
-import type { ITrack } from "../types/components";
-import type { TracksState } from "./types";
+import { RootState } from '../store';
+import { getAuthHeaders } from '../utils';
+import type { ITrack } from '../types/components';
+import type { TracksState } from './types';
 
-export const fetchTracks = createAsyncThunk(
-  "tracks/fetchTracks",
-  async () => {
-    try {
-      const response = await axios.get<ITrack[]>('http://localhost:3000/api/songs', getAuthHeaders());
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching tracks:", error);
-      return undefined
-    }
+export const fetchTracks = createAsyncThunk('tracks/fetchTracks', async () => {
+  try {
+    const response = await axios.get<ITrack[]>(
+      'http://localhost:3000/api/songs',
+      getAuthHeaders(),
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tracks:', error);
+    return undefined;
   }
-);
+});
 
 export const setLikeTrack = createAsyncThunk(
-  "tracks/setLikeTrack",
+  'tracks/setLikeTrack',
   async ({ trackId }: { trackId: number }) => {
     try {
-      const response = await axios.post<ITrack>(`http://localhost:3000/api/songs/${trackId}/like`, {}, getAuthHeaders());
+      const response = await axios.post<ITrack>(
+        `http://localhost:3000/api/songs/${trackId}/like`,
+        {},
+        getAuthHeaders(),
+      );
       return response.data;
     } catch (error) {
-      console.error("Error like track:", error);
-      return undefined
+      console.error('Error like track:', error);
+      return undefined;
     }
-  }
+  },
 );
 
 export const setUnlikeTrack = createAsyncThunk(
-  "tracks/setUnlikeTrack",
+  'tracks/setUnlikeTrack',
   async ({ trackId }: { trackId: number }) => {
     try {
-      const response = await axios.post<ITrack>(`http://localhost:3000/api/songs/${trackId}/unlike`, {}, getAuthHeaders());
+      const response = await axios.post<ITrack>(
+        `http://localhost:3000/api/songs/${trackId}/unlike`,
+        {},
+        getAuthHeaders(),
+      );
       return response.data;
     } catch (error) {
-      console.error("Error unlike track:", error);
-      return undefined
+      console.error('Error unlike track:', error);
+      return undefined;
     }
-  }
+  },
 );
 
 const initialState: TracksState = {
@@ -53,7 +61,7 @@ const initialState: TracksState = {
 };
 
 const tracksSlice = createSlice({
-  name: "tracks",
+  name: 'tracks',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -62,12 +70,15 @@ const tracksSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchTracks.fulfilled, (state, action: PayloadAction<ITrack[] | undefined>) => {
-        state.loading = false;
-        if (action.payload) {
-          state.tracks = action.payload;
-        }
-      })
+      .addCase(
+        fetchTracks.fulfilled,
+        (state, action: PayloadAction<ITrack[] | undefined>) => {
+          state.loading = false;
+          if (action.payload) {
+            state.tracks = action.payload;
+          }
+        },
+      )
       .addCase(fetchTracks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -76,15 +87,20 @@ const tracksSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(setLikeTrack.fulfilled, (state, action: PayloadAction<ITrack | undefined>) => {
-        state.loading = false;
-        if (action.payload) {
-          const index = state.tracks.findIndex(track => track.id === action.payload?.id);
-          if (index !== -1) {
-            state.tracks[index].likes = action.payload.likes;
+      .addCase(
+        setLikeTrack.fulfilled,
+        (state, action: PayloadAction<ITrack | undefined>) => {
+          state.loading = false;
+          if (action.payload) {
+            const index = state.tracks.findIndex(
+              (track) => track.id === action.payload?.id,
+            );
+            if (index !== -1) {
+              state.tracks[index].likes = action.payload.likes;
+            }
           }
-        }
-      })
+        },
+      )
       .addCase(setLikeTrack.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -93,15 +109,20 @@ const tracksSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(setUnlikeTrack.fulfilled, (state, action: PayloadAction<ITrack | undefined>) => {
-        state.loading = false;
-        if (action.payload) {
-          const index = state.tracks.findIndex(track => track.id === action.payload?.id);
-          if (index !== -1) {
-            state.tracks[index].likes = action.payload.likes;
+      .addCase(
+        setUnlikeTrack.fulfilled,
+        (state, action: PayloadAction<ITrack | undefined>) => {
+          state.loading = false;
+          if (action.payload) {
+            const index = state.tracks.findIndex(
+              (track) => track.id === action.payload?.id,
+            );
+            if (index !== -1) {
+              state.tracks[index].likes = action.payload.likes;
+            }
           }
-        }
-      })
+        },
+      )
       .addCase(setUnlikeTrack.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;

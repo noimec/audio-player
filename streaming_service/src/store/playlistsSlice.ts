@@ -1,85 +1,102 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from ".";
-import { getAuthHeaders } from "../utils";
-import type { IPlaylist } from "../types/components";
-import type { PlaylistsState } from "./types";
+import { RootState } from '.';
+import { getAuthHeaders } from '../utils';
+import type { IPlaylist } from '../types/components';
+import type { PlaylistsState } from './types';
 
 export const fetchPlaylists = createAsyncThunk(
-  "playlists/fetchPlaylists",
+  'playlists/fetchPlaylists',
   async () => {
     try {
-      const response = await axios.get<IPlaylist[]>('http://localhost:3000/api/users/playlists', getAuthHeaders());
+      const response = await axios.get<IPlaylist[]>(
+        'http://localhost:3000/api/users/playlists',
+        getAuthHeaders(),
+      );
       return response.data;
     } catch (error) {
-      console.error("Error fetching playlists:", error);
+      console.error('Error fetching playlists:', error);
       return undefined;
     }
-  }
+  },
 );
 
 export const addPlaylist = createAsyncThunk(
-  "playlists/addPlaylist",
+  'playlists/addPlaylist',
   async ({ name }: { name: string }, thunkAPI) => {
     try {
       const response = await axios.post<IPlaylist>(
         'http://localhost:3000/api/playlists',
         { name },
-        getAuthHeaders()
+        getAuthHeaders(),
       );
       return response.data;
     } catch (error) {
-      console.error("Error adding playlist:", error);
-      return thunkAPI.rejectWithValue("Failed to add playlist");
+      console.error('Error adding playlist:', error);
+      return thunkAPI.rejectWithValue('Failed to add playlist');
     }
-  }
+  },
 );
 
 export const removePlaylist = createAsyncThunk(
-  "playlists/removePlaylist",
+  'playlists/removePlaylist',
   async ({ playlistId }: { playlistId: number }, thunkAPI) => {
     try {
       await axios.delete<IPlaylist>(
         `http://localhost:3000/api/playlists/${playlistId}`,
-        getAuthHeaders()
+        getAuthHeaders(),
       );
       return playlistId;
     } catch (error) {
-      console.error("Error remove playlist:", error);
-      return thunkAPI.rejectWithValue("Failed to remove playlist");
+      console.error('Error remove playlist:', error);
+      return thunkAPI.rejectWithValue('Failed to remove playlist');
     }
-  }
+  },
 );
 
 export const addTrackToPlaylist = createAsyncThunk(
-  "playlists/addTrackToPlaylist",
-  async ({ playlistId, trackId }: { playlistId: number | null; trackId: number | null; }, thunkAPI) => {
+  'playlists/addTrackToPlaylist',
+  async (
+    {
+      playlistId,
+      trackId,
+    }: { playlistId: number | null; trackId: number | null },
+    thunkAPI,
+  ) => {
     try {
       const response = await axios.post<IPlaylist>(
-        `http://localhost:3000/api/playlists/${playlistId}/add/${trackId}`, {},
-        getAuthHeaders()
+        `http://localhost:3000/api/playlists/${playlistId}/add/${trackId}`,
+        {},
+        getAuthHeaders(),
       );
       return response.data;
     } catch (error) {
-      console.error("Error adding track to playlist:", error);
-      return thunkAPI.rejectWithValue("Failed adding track to playlist");
+      console.error('Error adding track to playlist:', error);
+      return thunkAPI.rejectWithValue('Failed adding track to playlist');
     }
-  }
+  },
 );
 
 export const removeTrackInPlaylist = createAsyncThunk(
-  "playlists/removeTrackInPlaylist",
-  async ({ playlistId, trackId }: { playlistId: number; trackId: number; }, thunkAPI) => {
+  'playlists/removeTrackInPlaylist',
+  async (
+    { playlistId, trackId }: { playlistId: number; trackId: number },
+    thunkAPI,
+  ) => {
     try {
-      const response = await axios.post<IPlaylist>(`http://localhost:3000/api/playlists/${playlistId}/remove/${trackId}`, {}, getAuthHeaders());
+      const response = await axios.post<IPlaylist>(
+        `http://localhost:3000/api/playlists/${playlistId}/remove/${trackId}`,
+        {},
+        getAuthHeaders(),
+      );
       return response.data;
     } catch (error) {
-      console.error("Error removing track in playlist:", error);
-      return thunkAPI.rejectWithValue("Failed to remove track from playlist");
+      console.error('Error removing track in playlist:', error);
+      return thunkAPI.rejectWithValue('Failed to remove track from playlist');
     }
-  }
+  },
 );
 
 const initialState: PlaylistsState = {
@@ -89,7 +106,7 @@ const initialState: PlaylistsState = {
 };
 
 const playlistsSlice = createSlice({
-  name: "playlists",
+  name: 'playlists',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -98,12 +115,15 @@ const playlistsSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchPlaylists.fulfilled, (state, action: PayloadAction<IPlaylist[] | undefined>) => {
-        state.loading = false;
-        if (action.payload) {
-          state.playlists = action.payload;
-        }
-      })
+      .addCase(
+        fetchPlaylists.fulfilled,
+        (state, action: PayloadAction<IPlaylist[] | undefined>) => {
+          state.loading = false;
+          if (action.payload) {
+            state.playlists = action.payload;
+          }
+        },
+      )
       .addCase(fetchPlaylists.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -111,10 +131,13 @@ const playlistsSlice = createSlice({
       .addCase(addPlaylist.pending, (state) => {
         state.loading = true;
       })
-      .addCase(addPlaylist.fulfilled, (state, action: PayloadAction<IPlaylist>) => {
-        state.loading = false;
-        state.playlists.push(action.payload);
-      })
+      .addCase(
+        addPlaylist.fulfilled,
+        (state, action: PayloadAction<IPlaylist>) => {
+          state.loading = false;
+          state.playlists.push(action.payload);
+        },
+      )
       .addCase(addPlaylist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -122,10 +145,15 @@ const playlistsSlice = createSlice({
       .addCase(removePlaylist.pending, (state) => {
         state.loading = true;
       })
-      .addCase(removePlaylist.fulfilled, (state, action: PayloadAction<number>) => {
-        state.loading = false;
-        state.playlists = state.playlists.filter(playlist => playlist.id !== action.payload);
-      })
+      .addCase(
+        removePlaylist.fulfilled,
+        (state, action: PayloadAction<number>) => {
+          state.loading = false;
+          state.playlists = state.playlists.filter(
+            (playlist) => playlist.id !== action.payload,
+          );
+        },
+      )
       .addCase(removePlaylist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -133,13 +161,16 @@ const playlistsSlice = createSlice({
       .addCase(addTrackToPlaylist.pending, (state) => {
         state.loading = true;
       })
-      .addCase(addTrackToPlaylist.fulfilled, (state, action: PayloadAction<IPlaylist>) => {
-        state.loading = false;
-        const updatedPlaylist = action.payload;
-        state.playlists = state.playlists.map(playlist =>
-          playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist
-        );
-      })
+      .addCase(
+        addTrackToPlaylist.fulfilled,
+        (state, action: PayloadAction<IPlaylist>) => {
+          state.loading = false;
+          const updatedPlaylist = action.payload;
+          state.playlists = state.playlists.map((playlist) =>
+            playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist,
+          );
+        },
+      )
       .addCase(addTrackToPlaylist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -147,13 +178,16 @@ const playlistsSlice = createSlice({
       .addCase(removeTrackInPlaylist.pending, (state) => {
         state.loading = true;
       })
-      .addCase(removeTrackInPlaylist.fulfilled, (state, action: PayloadAction<IPlaylist>) => {
-        state.loading = false;
-        const updatedPlaylist = action.payload;
-        state.playlists = state.playlists.map(playlist =>
-          playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist
-        );
-      })
+      .addCase(
+        removeTrackInPlaylist.fulfilled,
+        (state, action: PayloadAction<IPlaylist>) => {
+          state.loading = false;
+          const updatedPlaylist = action.payload;
+          state.playlists = state.playlists.map((playlist) =>
+            playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist,
+          );
+        },
+      )
       .addCase(removeTrackInPlaylist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -162,7 +196,8 @@ const playlistsSlice = createSlice({
 });
 
 export const selectPlaylists = (state: RootState) => state.playlists.playlists;
-export const selectPlaylistsLoading = (state: RootState) => state.playlists.loading;
+export const selectPlaylistsLoading = (state: RootState) =>
+  state.playlists.loading;
 export const selectPlaylistsError = (state: RootState) => state.playlists.error;
 
 export default playlistsSlice.reducer;

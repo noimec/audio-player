@@ -1,24 +1,24 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from ".";
-import type { ScreenSliceState } from "./types";
-import type { SwitchScreenType } from "../types/components";
+import { RootState } from '.';
+import type { ScreenSliceState } from './types';
+import type { SwitchScreenType } from '../types/components';
 
 const initialState: ScreenSliceState = {
-    screen: 'tracks',
+  screen: 'tracks',
 };
 
 const screenSlice = createSlice({
-    name: "screen",
-    initialState,
-    reducers: {
-        setScreen: (state, action: PayloadAction<SwitchScreenType>) => {
-            state.screen = action.payload;
-        },
-        clearScreen: (state) => {
-            state.screen = 'tracks';
-        },
+  name: 'screen',
+  initialState,
+  reducers: {
+    setScreen: (state, action: PayloadAction<SwitchScreenType>) => {
+      state.screen = action.payload;
     },
+    clearScreen: (state) => {
+      state.screen = 'tracks';
+    },
+  },
 });
 
 export const { setScreen, clearScreen } = screenSlice.actions;

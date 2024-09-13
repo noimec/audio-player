@@ -1,11 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import tracksReducer from "./tracksSlice";
-import playlistsReducer from "./playlistsSlice";
-import playerTrackReducer from "./playerTrackSlice";
-import screenReducer from "./screenSlice";
-import selectedPlaylistReducer from "./selectedPlaylistSlice";
-import filteredTracksReducer from "./filteredTracksSlise";
+import tracksReducer from './tracksSlice';
+import playlistsReducer from './playlistsSlice';
+import playerTrackReducer from './playerTrackSlice';
+import screenReducer from './screenSlice';
+import selectedPlaylistReducer from './selectedPlaylistSlice';
+import filteredTracksReducer from './filteredTracksSlise';
 
 export const store = configureStore({
   reducer: {
@@ -20,4 +20,3 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-

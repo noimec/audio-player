@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Layout } from "./components/Layout";
-import { Main } from "./components/Main";
-import { AuthPage } from "./components/AuthPage";
-import { useProtectedRoute } from "./hooks/useProtectedRoute";
+import { Layout } from './components/Layout';
+import { Main } from './components/Main';
+import { AuthPage } from './components/AuthPage';
+import { useProtectedRoute } from './hooks/useProtectedRoute';
 
 function App() {
   const ProtectedRoute = useProtectedRoute;
