@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: ./streaming_service_api
+    volumes:
+      - ./streaming_service_api:/usr/src/app
+    ports:
+      - "3000:3000"
+
+  client:
+    build:
+      context: ./streaming_service
+    volumes:
+      - ./streaming_service:/usr/src/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+
+networks:
+  playnow:
+    name: playnow
+    driver: bridge

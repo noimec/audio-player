@@ -12,10 +12,11 @@ export class ArtistsService {
   constructor(
     @InjectRepository(Artist)
     private readonly artistRepository: Repository<Artist>,
-  ) {}
+  ) { }
 
   async findOne(id: number): Promise<Artist> {
-    const artist = await this.artistRepository.findOne(id, {
+    const artist = await this.artistRepository.findOne({
+      where: { id },
       loadEagerRelations: true,
     });
 

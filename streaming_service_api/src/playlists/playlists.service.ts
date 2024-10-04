@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Song } from '../songs/song.entity';
 import { User } from '../users/user.entity';
 import { Playlist } from './playlist.entity';
 import { SongsService } from '../songs/songs.service';
 import { PlaylistDto } from './playlist.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PlaylistsService {
@@ -13,7 +13,7 @@ export class PlaylistsService {
     @InjectRepository(Playlist)
     private readonly playlistRepository: Repository<Playlist>,
     private readonly songsService: SongsService,
-  ) {}
+  ) { }
 
   async create(playlistDto: PlaylistDto, user: User): Promise<Playlist> {
     const playlist = this.playlistRepository.create({ ...playlistDto, user });
@@ -46,7 +46,8 @@ export class PlaylistsService {
   }
 
   async findOne(id: number): Promise<Playlist> {
-    const playlist = await this.playlistRepository.findOne(id, {
+    const playlist = await this.playlistRepository.findOne({
+      where: { id },
       loadEagerRelations: true,
     });
 

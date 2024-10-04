@@ -1,2 +1,7 @@
+import { DataSource } from 'typeorm';
 import { DatabaseConfiguration } from './database.configuration';
-export default new DatabaseConfiguration().createTypeOrmOptions();
+
+const databaseConfig = new DatabaseConfiguration();
+const dataSource = new DataSource(databaseConfig.createTypeOrmOptions());
+
+export default dataSource; 

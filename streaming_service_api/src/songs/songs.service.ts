@@ -1,16 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Song } from './song.entity';
 import { User } from '../users/user.entity';
 import { GetAllSongsDto } from './get-all-songs.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SongsService {
   constructor(
     @InjectRepository(Song)
     private readonly songRepository: Repository<Song>,
-  ) {}
+  ) { }
 
   async getAll(params: GetAllSongsDto): Promise<Song[]> {
     const query = this.songRepository
@@ -32,7 +32,8 @@ export class SongsService {
   }
 
   async findOne(id: number): Promise<Song> {
-    const song = await this.songRepository.findOne(id, {
+    const song = await this.songRepository.findOne({
+      where: { id },
       loadEagerRelations: true,
     });
 

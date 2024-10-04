@@ -1,18 +1,17 @@
-import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { DataSourceOptions } from 'typeorm';
 import { join } from 'path';
 
-export class DatabaseConfiguration implements TypeOrmOptionsFactory {
-  createTypeOrmOptions(): TypeOrmModuleOptions {
+export class DatabaseConfiguration {
+  createTypeOrmOptions(): DataSourceOptions {
     return {
       type: 'sqlite',
       database: 'data/database.db',
       synchronize: false,
       logging: false,
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-      migrations: [__dirname + '/migrations/**/*.{js,ts}'],
-      cli: {
-        migrationsDir: 'src/migrations',
-      },
+      migrations: [join(__dirname, 'migrations/**/*.{js,ts}')],
     };
   }
 }
+
+export default DatabaseConfiguration;

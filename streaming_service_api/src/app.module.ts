@@ -21,4 +21,4 @@ import { DatabaseConfiguration } from './database.configuration';
     UsersModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

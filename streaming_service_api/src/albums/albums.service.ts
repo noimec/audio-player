@@ -10,10 +10,11 @@ export class AlbumsService {
   constructor(
     @InjectRepository(Album)
     private readonly albumRepository: Repository<Album>,
-  ) {}
+  ) { }
 
   async findOne(id: number): Promise<Album> {
-    const album = await this.albumRepository.findOne(id, {
+    const album = await this.albumRepository.findOne({
+      where: { id },
       loadEagerRelations: true,
     });
 
