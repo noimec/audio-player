@@ -1,13 +1,13 @@
-FROM node:current-alpine3.20
+FROM node:20
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
 EXPOSE 5173
 
-CMD ["sh", "-c", "yarn dev"]
+CMD ["npm", "run", "dev"]
