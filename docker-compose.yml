@@ -2,16 +2,20 @@ services:
   server:
     build:
       context: ./streaming_service_api
+      dockerfile: Dockerfile
     volumes:
-      - ./streaming_service_api:/usr/src/app
+      - ./streaming_service_api:/usr/src/app/server
+      - /usr/src/app/server/node_modules
     ports:
       - "3000:3000"
 
   client:
     build:
       context: ./streaming_service
+      dockerfile: Dockerfile
     volumes:
       - ./streaming_service:/usr/src/app/client
+      - /usr/src/app/client/node_modules
     ports:
       - "5173:5173"
     depends_on:
