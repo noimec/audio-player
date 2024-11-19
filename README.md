@@ -88,30 +88,30 @@ $ npm run start
 ## Установка зависимостей
 
 ```bash
-$ yarn install
+$ npm install
 ```
 
 ## Запуск приложения
 
 ```bash
 # development
-$ yarn dev
+$ npm run dev
 ```
 
 ## Cборка
 
 ```bash
-$ yarn build
+$ npm run build
 ```
 
 ## Предварительный просмотр
 
 ```bash
-$ yarn preview
+$ npm run preview
 ```
 
 ## Линтинг
 
 ```bash
-$ yarn lint
+$ npm run lint
 ```
