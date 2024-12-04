@@ -38,7 +38,7 @@ Play Now — это приложение для управления музык�
 
 ```bash
 $ git clone https://github.com/ingerstep/play-now.git
-$ cd play-now
+$ cd react-player
 ```
 
 # Запуск с Docker
